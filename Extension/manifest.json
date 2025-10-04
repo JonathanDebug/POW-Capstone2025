@@ -1,0 +1,28 @@
+{
+  "manifest_version": 3,
+  "name": "POOW Capstone Extension",
+  "description": "TESTING FUNCTIONALITY",
+  "version": "1.0",
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "My Popup Extension"
+  },
+  "host_permissions": [
+    "https://*/*"
+  ],
+  "permissions": [
+    "tabs",
+    "scripting"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "https://outlook.office.com//*",
+        "https://outlook.live.com/*"
+      ],
+      "js": [
+        "popup.js"
+      ]
+    }
+  ]
+}
