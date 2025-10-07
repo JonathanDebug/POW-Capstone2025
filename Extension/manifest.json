@@ -1,12 +1,22 @@
 {
   "manifest_version": 3,
-  "name": "POOW Capstone Extension",
-  "description": "TESTING FUNCTIONALITY",
+  "name": "POW Capstone Extension",
+  "description": "Don't get hooked! Take control of your email security by manually triggering scans for phishing risks directly in Outlook.",
   "version": "1.0",
   "action": {
     "default_popup": "popup.html",
-    "default_title": "My Popup Extension"
+    "default_title": "POW Capstone Extension, Click to scan."
   },
+ 
+ 
+ 
+  "icons": {
+    "16": "/icon16.png",
+    "32": "/icon32.png", 
+    "48": "/icon48.png",
+    "128": "/icon128.png"
+  },
+
   "host_permissions": [
     "https://*/*"
   ],
