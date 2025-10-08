@@ -8,7 +8,8 @@
     "default_title": "My Popup Extension"
   },
   "host_permissions": [
-    "https://*/*"
+    "https://outlook.office.com//*",
+    "https://outlook.live.com/*"
   ],
   "permissions": [
     "tabs",
