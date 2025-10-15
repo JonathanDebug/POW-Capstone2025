@@ -7,21 +7,18 @@
     "default_popup": "popup.html",
     "default_title": "POW Capstone Extension, Click to scan."
   },
- 
- 
- 
   "icons": {
     "16": "/icon16.png",
-    "32": "/icon32.png", 
+    "32": "/icon32.png",
     "48": "/icon48.png",
     "128": "/icon128.png"
   },
-
   "host_permissions": [
     "https://outlook.office.com//*",
     "https://outlook.live.com/*"
   ],
   "permissions": [
+    "activeTab",
     "tabs",
     "scripting"
   ],
@@ -32,7 +29,7 @@
         "https://outlook.live.com/*"
       ],
       "js": [
-        "popup.js"
+        "content.js"
       ]
     }
   ]
