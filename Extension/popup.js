@@ -3,30 +3,13 @@
 //   alert("Hello World!");
 // });
 
-
-// document.getElementById('readEmail').addEventListener('click', async () => {
-//   const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
-
-//   if (tab.url.includes('outlook.office.com') || tab.url.includes('outlook.live.com')) {
-//     chrome.tabs.sendMessage(tab.id, { action: "getEmailContent" }, (response) => {
-//       if (response && !response.error) {
-//         displayEmailData(response);
-//       } else {
-//         document.getElementById('emailContent').innerHTML =
-//           '<p style="color: red;">Error reading email. Make sure you have an email open.</p>';
-//       }
-//     });
-//   } else {
-//     document.getElementById('emailContent').innerHTML =
-//       '<p style="color: red;">Please open Outlook Web App first.</p>';
-//   }
-// });
+// When the button is clicked, send a message to content script to extract email data
 
 document.getElementById('btnScan').addEventListener('click', async () => {
   const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
   chrome.tabs.sendMessage(tab.id, { action: "getEmailContent" }, (response) => {
     if (response && !response.error) {
-      const text = `Email: ${response.email}\n`;
+      const text = `subject: ${response.subject}\nfrom: ${response.sender}\nbody: ${response.body}`;
       console.log(text);
       navigator.clipboard.writeText(text).then(() => {
         alert('Email is supposed to be extracted');

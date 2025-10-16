@@ -12,22 +12,24 @@ function extractEmailData() {
     // For Outlook Web App
     // querySelector will look for the firs element that has [ária-label="Message subject"].
     // This however is not how it is in the OWA.
-    const Email = document.querySelector('[aria-label="Email message"]')?.textContent ||
-      'Subject not found';
-    // const sender = document.querySelector('[aria-label="Message sender"]')?.textContent ||
-    //   document.querySelector('[email-type="from"]')?.textContent ||
-    //   'Sender not found';
 
-    // const body = document.querySelector('[role="document"]')?.textContent ||
-    //   document.querySelector('.allowTextSelection.bodyContents')?.textContent ||
-    //   document.querySelector('.x_body')?.textContent ||
-    //   'Body not found';
+
+    //subject in the dom is named f77rj
+    const subject = document.querySelector(".f77rj")?.textContent ||
+      'Sender not found';
+    //sender in the dom is named OZZZK, but it's a span
+    const sender = document.querySelector('span.OZZZK')?.textContent ||
+      'Sender not found';
+
+    //body in the dom we can look it up with the aria-label "Message body"
+    const body = document.querySelector('[aria-label="Message body"]')?.innerText ||
+      'Body not found';
+
 
     return {
-      email: Email.trim(),
-      // subject: subject.trim(),
-      // sender: sender.trim(),
-      // body: body.trim(),
+      subject: subject.trim(),
+      sender: sender.trim(),
+      body: body.replace(/\n{2,}/g, '\n').replace(/\s{2,}/g, ' ').trim(),
       timestamp: new Date().toISOString(),
       url: window.location.href
     };
@@ -37,16 +39,3 @@ function extractEmailData() {
   }
 }
 
-// // Alternative approach: Monitor DOM changes for single-page app
-// const observer = new MutationObserver(() => {
-//   // Re-extract data when DOM changes (email navigation)
-//   const emailData = extractEmailData();
-//   if (emailData.body && emailData.body !== 'Body not found') {
-//     chrome.storage.local.set({ currentEmail: emailData });
-//   }
-// });
-
-// observer.observe(document.body, {
-//   childList: true,
-//   subtree: true
-// });
