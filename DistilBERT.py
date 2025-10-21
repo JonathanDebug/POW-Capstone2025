@@ -81,4 +81,5 @@ def load_data():
 def clean_html(raw_html):
     return BeautifulSoup(raw_html, "html.parser").get_text()
 
+# download_dataset()
 load_data()
