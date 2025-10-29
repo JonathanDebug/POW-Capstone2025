@@ -12,7 +12,7 @@ document.getElementById('btnScan').addEventListener('click', async () => {
       const text = `subject: ${response.subject}\nfrom: ${response.sender}\nbody: ${response.body}`;
       console.log(text);
       navigator.clipboard.writeText(text).then(() => {
-        alert('Email is supposed to be extracted');
+        alert('Email is extracted');
       });
     }
   });
