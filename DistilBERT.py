@@ -171,7 +171,13 @@ def evaluate_model():
 # Main
 # =============================
 if __name__ == "__main__":
-    evaluate_model()
+    # df = load_data()
+    # train_model(df)
+    # evaluate_model()
+    pipe = pipeline("text-classification",
+                   model="./bert-phishing-final",
+                   tokenizer="./bert-phishing-final",)
+    print(pipe("Helllo! we are excited to offer you a free iPhone! Click the link below to claim your prize."))
 
 
 
