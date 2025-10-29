@@ -1,2 +1,6 @@
-Datasets
-venv
+# Ignores everything
+*
+# But track this file
+!DistilBERT.py
+!.gitignore
+!Extension
