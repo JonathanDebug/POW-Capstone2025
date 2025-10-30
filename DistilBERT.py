@@ -1,7 +1,7 @@
 import torch
 import os
-import time
-from thop import clever_format, profile
+import time ## REQUIRED FOR TIME MEASUREMENT
+from thop import clever_format, profile # REQUIRED FOR FLOPS MEASUREMENT
 from transformers import pipeline, AutoTokenizer,AutoModelForSequenceClassification,TrainingArguments,Trainer
 import pandas as pd
 from bs4 import BeautifulSoup  # only needed if the emails have HTML
