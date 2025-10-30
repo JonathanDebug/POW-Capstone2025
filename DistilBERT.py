@@ -81,4 +81,8 @@ def load_data():
 def clean_html(raw_html):
     return BeautifulSoup(raw_html, "html.parser").get_text()
 
-load_data()
+# download_dataset()
+# load_data()
+
+result = classifier("I love using Hugging Face Transformers!")
+print(result)
