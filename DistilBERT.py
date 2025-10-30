@@ -1,5 +1,7 @@
 import torch
 import os
+import time
+from thop import clever_format, profile
 from transformers import pipeline, AutoTokenizer,AutoModelForSequenceClassification,TrainingArguments,Trainer
 import pandas as pd
 from bs4 import BeautifulSoup  # only needed if the emails have HTML
@@ -16,9 +18,154 @@ import numpy as np
 # I used this (I have a RTX 2070): pip3 install torch torchvision --index-url https://download.pytorch.org/whl/cu126
 # If you get memory errors try this: pip install torch --index-url https://download.pytorch.org/whl/cu126
 # pip install torchvision torchaudio --index-url https://download.pytorch.org/whl/cu126
+
+#SEBAS NOTES - I had to do a different pip install for pytorch for cuda 12.9 I think, but that depends on the GPU and the driver that you have installed. 
+# If the code might not run, update GPU drivers and install the pip install correctly from pytorch. 
+
 def check_cuda():
     print("CUDA Available?", torch.cuda.is_available(), "\nGPU:",
           torch.cuda.get_device_name(0) if torch.cuda.is_available() else "CUDA not available")  # Should be True
+
+
+
+#---------------------MEASUREMENT FUNCTIONS---------------------#
+def measure_model_complexity(model_path="./bert-phishing-final", num_runs=100, sequence_length=256):
+    """
+    Measure time complexity and FLOPs of the trained model.
+    
+    Args:
+        model_path: Path to the saved model
+        num_runs: Number of inference runs for timing
+        sequence_length: Input sequence length for measurements
+    """
+    
+    # Load model and tokenizer
+    print("Loading model for complexity analysis...")
+    model = AutoModelForSequenceClassification.from_pretrained(model_path)
+    tokenizer = AutoTokenizer.from_pretrained(model_path)
+    
+    # Set model to evaluation mode
+    model.eval()
+    
+    # Create dummy input for measurements
+    dummy_text = """subject: Updating how Meta personalizes experiences
+                    from: Instagram<no-reply@mail.instagram.com>
+                    body: You can learn more about how we’re updating how we use your info in our Privacy Policy. Updating how Meta personalizes experiences Hi sorah350, On December 16, 2025, we’re making changes to our Privacy Policy. Here are some details. Personalizing your experiences We’ll start using your interactions with AIs to personalize your experiences and ads. What this means Personalizing your experiences includes suggesting content like posts that you may find interesting and reels to watch. It also includes showing ads that are more relevant to you. Thanks,
+                    Meta Privacy © Meta. Meta Platforms, Inc., Attention: Community Support, 1 Meta Way, Menlo Park, CA 94025
+                    This email was sent to btgmns@outlook.com. To help keep your account secure, please don’t forward this email.
+                    Learn more """ * 10
+    inputs = tokenizer(dummy_text, 
+                      return_tensors="pt", 
+                      truncation=True, 
+                      padding="max_length", 
+                      max_length=sequence_length)
+    
+    print(f"\n=== Model Complexity Analysis ===")
+    print(f"Model: {model_path}")
+    print(f"Input sequence length: {sequence_length}")
+    print(f"Number of parameters: {sum(p.numel() for p in model.parameters()):,}")
+    print(f"Number of trainable parameters: {sum(p.numel() for p in model.parameters() if p.requires_grad):,}")
+    
+    # Measure FLOPs
+    print(f"\n--- FLOPs Measurement ---")
+    try:
+        macs, params = profile(model, 
+                              inputs=(inputs['input_ids'], inputs['attention_mask']),
+                              verbose=False)
+        flops = macs * 2  # Convert MACs to FLOPs (approximately)
+        
+        # Format for better readability
+        macs_formatted, params_formatted = clever_format([macs, params], "%.3f")
+        flops_formatted = clever_format([flops], "%.3f")
+        
+        print(f"MACs (Multiply-Accumulate Operations): {macs_formatted}")
+        print(f"FLOPs (Floating Point Operations): {flops_formatted}")
+        print(f"Parameters: {params_formatted}")
+        
+    except Exception as e:
+        print(f"FLOPs measurement failed: {e}")
+        print("Install thop for FLOPs measurement: pip install thop")
+    
+    # Measure inference time
+    print(f"\n--- Time Complexity Measurement ---")
+    
+    # Warm-up runs
+    print("Running warm-up...")
+    with torch.no_grad():
+        for _ in range(10):
+            _ = model(**inputs)
+    
+    # CPU timing
+    if torch.cuda.is_available():
+        model = model.cpu()
+        print("Measuring CPU inference time...")
+        cpu_times = []
+        with torch.no_grad():
+            for i in range(num_runs):
+                start_time = time.time()
+                _ = model(**inputs)
+                end_time = time.time()
+                cpu_times.append((end_time - start_time) * 1000)  # Convert to milliseconds
+        
+        cpu_avg = np.mean(cpu_times)
+        cpu_std = np.std(cpu_times)
+        print(f"CPU Inference Time: {cpu_avg:.2f} ± {cpu_std:.2f} ms")
+        print(f"CPU Throughput: {1000/cpu_avg:.2f} samples/second")
+    
+    # GPU timing (if available)
+    if torch.cuda.is_available():
+        print("\nMeasuring GPU inference time...")
+        model = model.cuda()
+        inputs = {key: value.cuda() for key, value in inputs.items()}
+        
+        # GPU warm-up
+        with torch.no_grad():
+            for _ in range(10):
+                _ = model(**inputs)
+        torch.cuda.synchronize()  # Wait for GPU to finish
+        
+        gpu_times = []
+        with torch.no_grad():
+            for i in range(num_runs):
+                start_time = time.time()
+                _ = model(**inputs)
+                torch.cuda.synchronize()  # Ensure proper timing
+                end_time = time.time()
+                gpu_times.append((end_time - start_time) * 1000)  # Convert to milliseconds
+        
+        gpu_avg = np.mean(gpu_times)
+        gpu_std = np.std(gpu_times)
+        print(f"GPU Inference Time: {gpu_avg:.2f} ± {gpu_std:.2f} ms")
+        print(f"GPU Throughput: {1000/gpu_avg:.2f} samples/second")
+        print(f"Speedup (GPU vs CPU): {cpu_avg/gpu_avg:.2f}x")
+    
+    # Memory usage analysis
+    print(f"\n--- Memory Usage ---")
+    param_size = 0
+    for param in model.parameters():
+        param_size += param.nelement() * param.element_size()
+    
+    buffer_size = 0
+    for buffer in model.buffers():
+        buffer_size += buffer.nelement() * buffer.element_size()
+    
+    total_size = param_size + buffer_size
+    print(f"Model size: {total_size / 1024**2:.2f} MB")
+    print(f"Parameters size: {param_size / 1024**2:.2f} MB")
+    print(f"Buffers size: {buffer_size / 1024**2:.2f} MB")
+    
+    # Layer-wise analysis (simplified)
+    print(f"\n--- Model Architecture ---")
+    print(f"Model type: {model.__class__.__name__}")
+    if hasattr(model, 'config'):
+        config = model.config
+        if hasattr(config, 'num_hidden_layers'):
+            print(f"Number of layers: {config.num_hidden_layers}")
+        if hasattr(config, 'hidden_size'):
+            print(f"Hidden size: {config.hidden_size}")
+        if hasattr(config, 'num_attention_heads'):
+            print(f"Attention heads: {config.num_attention_heads}")
+
 
 
 def download_dataset():
@@ -174,10 +321,16 @@ if __name__ == "__main__":
     # df = load_data()
     # train_model(df)
     # evaluate_model()
+    check_cuda()
+
+    measure_model_complexity()
+
+
     pipe = pipeline("text-classification",
                    model="./bert-phishing-final",
                    tokenizer="./bert-phishing-final",)
-    print(pipe("Helllo! we are excited to offer you a free iPhone! Click the link below to claim your prize."))
+    result = pipe("Helllo! we are excited to offer you a free iPhone! Click the link below to claim your prize.")
+    print(f"Prediction result: {result}")
 
 
 
