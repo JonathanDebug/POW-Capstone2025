@@ -2,7 +2,10 @@
 *
 # But track this file
 !DistilBERT.py
-!Nemo/*
 !pyproject.toml
 !README.md
 !.gitignore
+
+# Track the Nemo directory and its contents
+!Nemo
+!Nemo/**/*
