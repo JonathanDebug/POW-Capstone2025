@@ -23,6 +23,7 @@ import numpy as np
 # If the code might not run, update GPU drivers and install the pip install correctly from pytorch. 
 
 def check_cuda():
+    print("CUDA Version: ", torch.version.cuda)
     print("CUDA Available?", torch.cuda.is_available(), "\nGPU:",
           torch.cuda.get_device_name(0) if torch.cuda.is_available() else "CUDA not available")  # Should be True
 
@@ -318,19 +319,21 @@ def evaluate_model():
 # Main
 # =============================
 if __name__ == "__main__":
-    # df = load_data()
-    # train_model(df)
-    # evaluate_model()
     check_cuda()
+    
+    df = load_data()
+    train_model(df)
+    evaluate_model()
+    
 
-    measure_model_complexity()
+    # measure_model_complexity()
 
 
-    pipe = pipeline("text-classification",
-                   model="./bert-phishing-final",
-                   tokenizer="./bert-phishing-final",)
-    result = pipe("Helllo! we are excited to offer you a free iPhone! Click the link below to claim your prize.")
-    print(f"Prediction result: {result}")
+    # pipe = pipeline("text-classification",
+    #                model="./bert-phishing-final",
+    #                tokenizer="./bert-phishing-final",)
+    # result = pipe("Helllo! we are excited to offer you a free iPhone! Click the link below to claim your prize.")
+    # print(f"Prediction result: {result}")
 
 
 
