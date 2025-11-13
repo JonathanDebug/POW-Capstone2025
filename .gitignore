@@ -9,3 +9,5 @@
 # Track the Nemo directory and its contents
 !Nemo
 !Nemo/**/*
+!GenDatasets
+!GenDatasets/**/*
