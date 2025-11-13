@@ -4,6 +4,28 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     const emailData = extractEmailData();
     sendResponse(emailData);
   }
+  // 🔥 Send extracted email to backend
+  fetch("http://localhost:8000/analyze-email", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(emailData)
+  })
+    .then(res => res.json())
+    .then(analysis => {
+      sendResponse({
+        success: true,
+        email: emailData,
+        analysis: analysis
+      });
+    })
+    .catch(err => {
+      sendResponse({
+        success: false,
+        error: err.message
+      });
+    });
+
+  return true; // keeps the async channel open
   return true;
 });
 

@@ -7,16 +7,39 @@
 
 document.getElementById('btnScan').addEventListener('click', async () => {
   const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
+
   chrome.tabs.sendMessage(tab.id, { action: "getEmailContent" }, (response) => {
-    if (response && !response.error) {
-      const text = `subject: ${response.subject}\nfrom: ${response.sender}\nbody: ${response.body}`;
-      console.log(text);
-      navigator.clipboard.writeText(text).then(() => {
-        alert('Email is extracted');
-      });
+    if (!response) {
+      alert("No response — content script might not be injected.");
+      return;
     }
+
+    if (!response.success) {
+      alert("Error: " + response.error);
+      return;
+    }
+
+    const email = response.email;
+    const analysis = response.analysis;
+
+    console.log("Extracted email:", email);
+    console.log("Backend analysis:", analysis);
+
+    const text = `
+Subject: ${email.subject}
+Sender:  ${email.sender}
+Body:    ${email.body.substring(0, 200)}...
+
+Prediction: ${analysis.label}
+Score: ${analysis.score}
+    `;
+
+    navigator.clipboard.writeText(text).then(() => {
+      alert(`Email scanned.\nPrediction: ${analysis.label}`);
+    });
   });
 });
+
 
 // function displayEmailData(emailData) {
 //   const contentDiv = document.getElementById('emailContent');
