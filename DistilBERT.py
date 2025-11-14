@@ -173,8 +173,8 @@ def evaluate_model():
 if __name__ == "__main__":
     evaluate_model()
 
+# Optional: function to clean HTML
+def clean_html(raw_html):
+    return BeautifulSoup(raw_html, "html.parser").get_text()
 
-
-
-
-
+load_data()
