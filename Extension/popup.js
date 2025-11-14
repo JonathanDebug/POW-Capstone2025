@@ -9,11 +9,27 @@ document.getElementById('btnScan').addEventListener('click', async () => {
   const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
   chrome.tabs.sendMessage(tab.id, { action: "getEmailContent" }, (response) => {
     if (response && !response.error) {
-      const text = `subject: ${response.subject}\nfrom: ${response.sender}\nbody: ${response.body}`;
-      console.log(text);
-      navigator.clipboard.writeText(text).then(() => {
-        alert('Email is supposed to be extracted');
-      });
+      
+      const emailData = {
+        subject: response.subject,
+        from: response.sender,
+        body: response.body,
+      };
+
+      // Create and download the JSON file
+      const dataStr = JSON.stringify(emailData, null, 2);
+      const blob = new Blob([dataStr], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      
+      const emaildata = document.createElement('a');
+      emaildata.href = url;
+      emaildata.download = 'POW Database.json';
+      document.body.appendChild(emaildata);
+      emaildata.click();
+      document.body.removeChild(emaildata);
+      URL.revokeObjectURL(url);
+      
+      alert('POW Database.json has been downloaded!!');
     }
   });
 });

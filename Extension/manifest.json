@@ -20,7 +20,9 @@
   "permissions": [
     "activeTab",
     "tabs",
-    "scripting"
+    "scripting",
+    "storage",
+    "downloads"
   ],
   "content_scripts": [
     {

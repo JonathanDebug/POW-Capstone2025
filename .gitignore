@@ -1,0 +1,13 @@
+# Ignores everything
+*
+# But track this file
+!DistilBERT.py
+!pyproject.toml
+!README.md
+!.gitignore
+
+# Track the Nemo directory and its contents
+!Nemo
+!Nemo//*
+!GenDatasets
+!GenDatasets//*
