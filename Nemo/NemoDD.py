@@ -225,7 +225,7 @@ config_builder.validate()
 
 
 #------------------------------------FINALLY CREATE THE DATASET-----------------------------------
-job_results = data_designer_client.create(config_builder, num_records=20)
+job_results = data_designer_client.create(config_builder, num_records=100)
 
 # This will block until the job is complete.
 job_results.wait_until_done()
