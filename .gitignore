@@ -5,3 +5,4 @@
 !.gitignore
 !Extension
 !server.py
+!requirements.txt
