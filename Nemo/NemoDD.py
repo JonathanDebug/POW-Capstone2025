@@ -59,8 +59,38 @@ config_builder = DataDesignerConfigBuilder(model_configs=model_configs)
 config_builder.info.sampler_table
 
 
+# Configuring product Schema
+
+# We define a Product schema so that the name, description, and price are generated
+# in one go, with the types and constraints specified.
+class Product(BaseModel):
+    name: str = Field(description="The name of the product")
+    description: str = Field(description="A description of the product")
+    price: Decimal = Field(
+        description="The price of the product", ge=10, le=1000, decimal_places=2
+    )
+
+
+class ProductReview(BaseModel):
+    rating: int = Field(description="The rating of the product", ge=1, le=5)
+    customer_mood: Literal["irritated", "mad", "happy", "neutral", "excited"] = Field(
+        description="The mood of the customer"
+    )
+    review: str = Field(description="A review of the product")
+
 
 ##---------------------------------Product review dataset test---------------------------------------
+
+# Since we often only want a few attributes from Person objects, we can
+# set drop=True in the column config to drop the column from the final dataset.
+config_builder.add_column(
+    SamplerColumnConfig(
+        name="customer",
+        sampler_type=SamplerType.PERSON,
+        params=PersonSamplerParams(age_range=[18, 65]),
+        drop=True,
+    )
+)
 
 config_builder.add_column(
     SamplerColumnConfig(
@@ -135,6 +165,23 @@ config_builder.add_column(
     )
 )
 
+# Sampler columns support conditional params, which are used if the condition is met.
+# In this example, we set the review style to rambling if the target age range is 18-25.
+# Note conditional parameters are only supported for Sampler column types.
+config_builder.add_column(
+    SamplerColumnConfig(
+        name="review_style",
+        sampler_type=SamplerType.CATEGORY,
+        params=CategorySamplerParams(
+            values=["rambling", "brief", "detailed", "structured with bullet points"],
+            weights=[1, 2, 2, 1],
+        ),
+        conditional_params={
+            "target_age_range == '18-25'": CategorySamplerParams(values=["rambling"]),
+        },
+    )
+)
+
 # Optionally validate that the columns are configured correctly.
 config_builder.validate()
 
@@ -145,7 +192,8 @@ config_builder.add_column(
     SamplerColumnConfig(
         name="customer",
         sampler_type=SamplerType.PERSON,
-        params=PersonSamplerParams(age_range=[18, 70]),
+        params=PersonSamplerParams(age_range=[18, 65]),
+        drop=True,
     )
 )
 
