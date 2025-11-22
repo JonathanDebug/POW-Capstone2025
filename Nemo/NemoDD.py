@@ -2,6 +2,7 @@ from getpass import getpass
 from decimal import Decimal
 from typing import Literal
 from pydantic import BaseModel, Field
+from tutorial_helpers.helpers import data_path
 
 from nemo_microservices.data_designer.essentials import (
     CategorySamplerParams,
@@ -15,6 +16,8 @@ from nemo_microservices.data_designer.essentials import (
     UniformSamplerParams,
     ModelConfig,
     InferenceParameters,
+    LLMStructuredColumnConfig,
+    ExpressionColumnConfig
 )
 
 
@@ -220,30 +223,51 @@ config_builder.add_column(
 config_builder.validate()
 
 #------------------------------LLM GENERATED COLUMNS-----------------------------------
+# We can create new columns using Jinja expressions that reference
+# existing columns, including attributes of nested objects.
 config_builder.add_column(
-    LLMTextColumnConfig(
-        name="product_name",
-        prompt=(
-            "You are a helpful assistant that generates product names. DO NOT add quotes around the product name.\n\n"
-            "Come up with a creative product name for a product in the '{{ product_category }}' category, focusing "
-            "on products related to '{{ product_subcategory }}'. The target age range of the ideal customer is "
-            "{{ target_age_range }} years old. Respond with only the product name, no other text."
-        ),
-        system_prompt=SYSTEM_PROMPT,
-        model_alias=MODEL_ALIAS,
+    ExpressionColumnConfig(
+        name="customer_name", expr="{{ customer.first_name }} {{ customer.last_name }}"
     )
 )
 
 config_builder.add_column(
-    LLMTextColumnConfig(
-        name="customer_review",
+    ExpressionColumnConfig(name="customer_age", expr="{{ customer.age }}")
+)
+
+config_builder.add_column(
+    LLMStructuredColumnConfig(
+        name="product",
         prompt=(
-            "You are a customer named {{ customer.first_name }} from {{ customer.city }}, {{ customer.state }}. "
-            "You are {{ customer.age }} years old and recently purchased a product called {{ product_name }}. "
-            "Write a review of this product, which you gave a rating of {{ number_of_stars }} stars. "
-            "The style of the review should be '{{ review_style }}'."
+            "Create a product in the '{{ product_category }}' category, focusing on products  "
+            "related to '{{ product_subcategory }}'. The target age range of the ideal customer is "
+            "{{ target_age_range }} years old. The product should be priced between $10 and $1000."
         ),
         system_prompt=SYSTEM_PROMPT,
+        output_format=Product,
+        model_alias=MODEL_ALIAS,
+    )
+)
+
+# We can even use if/else logic in our Jinja expressions to create more complex prompt patterns.
+config_builder.add_column(
+    LLMStructuredColumnConfig(
+        name="customer_review",
+        prompt=(
+            "Your task is to write a review for the following product:\n\n"
+            "Product Name: {{ product.name }}\n"
+            "Product Description: {{ product.description }}\n"
+            "Price: {{ product.price }}\n\n"
+            "Imagine your name is {{ customer_name }} and you are from {{ customer.city }}, {{ customer.state }}. "
+            "Write the review in a style that is '{{ review_style }}'."
+            "{% if target_age_range == '18-25' %}"
+            "Make sure the review is more informal and conversational."
+            "{% else %}"
+            "Make sure the review is more formal and structured."
+            "{% endif %}"
+        ),
+        system_prompt=SYSTEM_PROMPT,
+        output_format=ProductReview,
         model_alias=MODEL_ALIAS,
     )
 )
@@ -298,5 +322,5 @@ OUTPUT_PATH = "GenDatasets"
 # Download the job artifacts and save them to disk.
 job_results.download_artifacts(
     output_path=OUTPUT_PATH,
-    artifacts_folder_name="artifacts-1-the-basics",
+    artifacts_folder_name="artifacts-2-structured-outputs-and-jinja-expressions",
 );
