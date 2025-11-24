@@ -2,7 +2,8 @@ from getpass import getpass
 from decimal import Decimal
 from typing import Literal
 from pydantic import BaseModel, Field
-from tutorial_helpers.helpers import data_path
+from pathlib import Path
+
 
 from nemo_microservices.data_designer.essentials import (
     CategorySamplerParams,
@@ -19,6 +20,11 @@ from nemo_microservices.data_designer.essentials import (
     LLMStructuredColumnConfig,
     ExpressionColumnConfig
 )
+
+
+##INITIALIZING Data_path
+project_path = Path(__file__).parent.parent
+data_path = project_path / "data" 
 
 
 #Initializing the NeMo Data Designer Client
@@ -97,15 +103,15 @@ config_builder.add_column(
 
 config_builder.add_column(
     SamplerColumnConfig(
-        name="product_category",
+        name="departments",
         sampler_type=SamplerType.CATEGORY,
         params=CategorySamplerParams(
             values=[
-                "Electronics",
-                "Clothing",
-                "Home & Kitchen",
-                "Books",
-                "Home Office",
+                "Computer Science and Engineering",
+                "Electrical and Computer Engineering",
+                "Mechanical Engineering",
+                "Industrial Engineering",
+                "Chemical Engineering",
             ],
         ),
     )
@@ -113,45 +119,45 @@ config_builder.add_column(
 
 config_builder.add_column(
     SamplerColumnConfig(
-        name="product_subcategory",
+        name="department_staff",
         sampler_type=SamplerType.SUBCATEGORY,
         params=SubcategorySamplerParams(
             category="product_category",
             values={
-                "Electronics": [
-                    "Smartphones",
-                    "Laptops",
-                    "Headphones",
-                    "Cameras",
-                    "Accessories",
+                "Computer Science and Engineering": [
+                    "Dr. William Tercero Gallina",
+                    "Dr. Kaige Lu",
+                    "Dr. Mark Shoots",
+                    "Dr. Juan Midely",
+                    "Dr. Juan Patrollo",
                 ],
-                "Clothing": [
-                    "Men's Clothing",
-                    "Women's Clothing",
-                    "Winter Coats",
-                    "Activewear",
-                    "Accessories",
+                "Electrical and Computer Engineering": [
+                    "Dr. Easydoro Rey",
+                    "Dr. Gather Shun",
+                    "Dr. Edward Otto",
+                    "Dr. Cordova Bonilla",
+                    "Dr. Domingo Domingo Rodriguez",
                 ],
-                "Home & Kitchen": [
-                    "Appliances",
-                    "Cookware",
-                    "Furniture",
-                    "Decor",
-                    "Organization",
+                "Mechanical Engineering": [
+                    "Dr. Sierra David",
+                    "Dr. Ludwig Jose",
+                    "Dr. Brand Coolriel",
+                    "Dr. David Doomer",
+                    "Dr. Pedro Pedro",
                 ],
-                "Books": [
-                    "Fiction",
-                    "Non-Fiction",
-                    "Self-Help",
-                    "Textbooks",
-                    "Classics",
+                "Industrial Engineering": [
+                    "Dr. Agosto Rulla Toro",
+                    "Dr. Hector Carlos Carlos",
+                    "Dr. David Barrio Gonzales",
+                    "Assistant Professor Sam Olive Bonicia",
+                    "Dr. Mauricio Rivera Dominguez",
                 ],
-                "Home Office": [
-                    "Desks",
-                    "Chairs",
-                    "Storage",
-                    "Office Supplies",
-                    "Lighting",
+                "Chemical Engineering": [
+                    "Dra. Marie Curie",
+                    "Dr. Yoma Torres",
+                    "Dra. Patricia Bermuda Otto",
+                    "Dr. Osvaldo Cordova",
+                    "Dr. Arturo Rey",
                 ],
             },
         ),
