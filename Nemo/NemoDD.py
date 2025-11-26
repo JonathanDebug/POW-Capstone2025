@@ -38,7 +38,7 @@ data_designer_client = NeMoDataDesignerClient(base_url=NEMO_MICROSERVICES_BASE_U
 # This name is set in the microservice deployment configuration.
 MODEL_PROVIDER = "nvidiabuild"
 
-# The model ID is from build.nvidia.com.
+# The model ID is from build.nvidia.com.    
 MODEL_ID = "nvidia/nvidia-nemotron-nano-9b-v2"
 
 # We choose this alias to be descriptive for our use case.
@@ -92,12 +92,14 @@ class ProductReview(BaseModel):
 
 # Since we often only want a few attributes from Person objects, we can
 # set drop=True in the column config to drop the column from the final dataset.
+
+#We're generating even some columns that their purpose is to help generate the proper subject and email
+#Consider it like helper columns
 config_builder.add_column(
     SamplerColumnConfig(
-        name="customer",
+        name="student_victim", #That's what they are after all
         sampler_type=SamplerType.PERSON,
-        params=PersonSamplerParams(age_range=[18, 65]),
-        drop=True,
+        params=PersonSamplerParams(age_range=[18, 30]), # Range ofage of students possibly vulnerable
     )
 )
 
