@@ -94,7 +94,7 @@ class ProductReview(BaseModel):
 # set drop=True in the column config to drop the column from the final dataset.
 config_builder.add_column(
     SamplerColumnConfig(
-        name="customer",
+        name="Student_victim",
         sampler_type=SamplerType.PERSON,
         params=PersonSamplerParams(age_range=[18, 65]),
         drop=True,
@@ -182,12 +182,10 @@ config_builder.add_column(
         name="review_style",
         sampler_type=SamplerType.CATEGORY,
         params=CategorySamplerParams(
-            values=["rambling", "brief", "detailed", "structured with bullet points"],
-            weights=[1, 2, 2, 1],
+            values=["research assistant","administrative assistant", "Internship"],
+            weights=[2,1,1],
         ),
-        conditional_params={
-            "target_age_range == '18-25'": CategorySamplerParams(values=["rambling"]),
-        },
+
     )
 )
 
