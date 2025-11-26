@@ -184,12 +184,10 @@ config_builder.add_column(
         name="review_style",
         sampler_type=SamplerType.CATEGORY,
         params=CategorySamplerParams(
-            values=["rambling", "brief", "detailed", "structured with bullet points"],
-            weights=[1, 2, 2, 1],
+            values=["research assistant","administrative assistant", "Internship"],
+            weights=[2,1,1],
         ),
-        conditional_params={
-            "target_age_range == '18-25'": CategorySamplerParams(values=["rambling"]),
-        },
+
     )
 )
 
