@@ -42,7 +42,7 @@ MODEL_PROVIDER = "nvidiabuild"
 MODEL_ID = "nvidia/nvidia-nemotron-nano-9b-v2"
 
 # We choose this alias to be descriptive for our use case.
-MODEL_ALIAS = "nemotron-nano-v2"
+MODEL_ALIAS = "nemotronDDPhishDataset"
 
 # This sets reasoning to False for the nemotron-nano-v2 model.
 SYSTEM_PROMPT = "/no_think"
@@ -57,6 +57,7 @@ model_configs = [
             temperature=0.8,
             top_p=1.0,
             max_tokens=1024,
+            max_parallel_requests=12
         ),
     )
 ]
@@ -194,38 +195,18 @@ config_builder.validate()
 
 
 #------------------Adding Samplers to generate data related to the customer and their review---------------
-# This column will sample synthetic person data based on statistics from the US Census.
-# config_builder.add_column(
-#     SamplerColumnConfig(
-#         name="customer",
-#         sampler_type=SamplerType.PERSON,
-#         params=PersonSamplerParams(age_range=[18, 65]),
-#         drop=True,
-#     )
-# )
+config_builder.add_column(
+    SamplerColumnConfig(
+        name="weekly_pay",
+        sampler_type=SamplerType.CATEGORY,
+        params=CategorySamplerParams(
+            values=[250,275,300,315,350],
+            weights=[1, 2, 2, 1, 1]
+        ),
+    )
+)
 
-# config_builder.add_column(
-#     SamplerColumnConfig(
-#         name="number_of_stars",
-#         sampler_type=SamplerType.UNIFORM,
-#         params=UniformSamplerParams(low=1, high=5),
-#         convert_to="int",  # Convert the sampled float to an integer.
-#     )
-# )
-
-# config_builder.add_column(
-#     SamplerColumnConfig(
-#         name="review_style",
-#         sampler_type=SamplerType.CATEGORY,
-#         params=CategorySamplerParams(
-#             values=["rambling", "brief", "detailed", "structured with bullet points"],
-#             weights=[1, 2, 2, 1],
-#         ),
-#     )
-# )
-
-# config_builder.validate()
-
+config_builder.validate()
 #------------------------------LLM GENERATED COLUMNS-----------------------------------
 # We can create new columns using Jinja expressions that reference
 # existing columns, including attributes of nested objects.
@@ -240,6 +221,8 @@ config_builder.add_column(
         dtype="int",
     )
 )
+
+
 
 # config_builder.add_column(
 #     ExpressionColumnConfig(name="customer_age", expr="{{ customer.age }}")
@@ -268,8 +251,9 @@ config_builder.add_column(
                 "Keep the job description vague and short. " 
                 "The email body text should list the requirements needed for the job position. "
                 "The requirements must have a low barrier of entry for the students in the '{{departments}}' field. "
-                "The email should have the weekly pay listed. With the weekly pay being priced between 250$ and 350$. It must show a singular value. "
-                "The email should be signed off with the name of the '{{department_staff}}'" 
+                "The email should have the weekly pay listed being '{{weekly_pay}}'. "
+                "The email should be signed off with the name of the '{{department_staff}}' "
+                "The sign off should have the email of the professor '{{ department_staff.split()[1] | lower }}.{{ department_staff.split()[-1] | lower }}@upr.edu "  
                 "{% if student_age < 22 %}"
                 "Address the student directly by '{{student_name}}' "
                 "Change the requirements to say that there's no prior experience needed for the job "
@@ -327,27 +311,27 @@ config_builder.validate()
 #--------------------Testing for preview of a sample record----------------
 
 
-preview = data_designer_client.preview(config_builder)
+# preview = data_designer_client.preview(config_builder)
 
 
 
-# Run this cell multiple times to cycle through the 10 preview records.
-for i in range(0,10):
-    preview.display_sample_record()
+# # Run this cell multiple times to cycle through the 10 preview records.
+# for i in range(0,10):
+#     preview.display_sample_record()
 
-# The preview dataset is available as a pandas DataFrame.
-# TO VIEW THE DATA FRAME, RUN THIS IN DEBUGGER AND USE THE DATA WRANGLER EXTENSION IN VSC
+# # The preview dataset is available as a pandas DataFrame.
+# # TO VIEW THE DATA FRAME, RUN THIS IN DEBUGGER AND USE THE DATA WRANGLER EXTENSION IN VSC
 
-preview.dataset
+# preview.dataset
 
-# Print the analysis as a table.
-preview.analysis.to_report()
+# # Print the analysis as a table.
+# preview.analysis.to_report()
 
 
 #------------------------------------FINALLY CREATE THE DATASET-----------------------------------
-# job_results = data_designer_client.create(config_builder, num_records=100)
+# job_results = data_designer_client.create(config_builder, num_records=1000)
 
-# # This will block until the job is complete.
+# # # This will block until the job is complete.
 # job_results.wait_until_done()
 
 
@@ -370,5 +354,5 @@ preview.analysis.to_report()
 # # Download the job artifacts and save them to disk.
 # job_results.download_artifacts(
 #     output_path=OUTPUT_PATH,
-#     artifacts_folder_name="artifacts-2-structured-outputs-and-jinja-expressions",
+#     artifacts_folder_name="Phishing_Emails_test1",
 # );
