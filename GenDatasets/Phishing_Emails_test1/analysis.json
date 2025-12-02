@@ -1,10 +1,10 @@
 {
-    "num_records": 993,
-    "target_num_records": 1000,
+    "num_records": 24935,
+    "target_num_records": 25000,
     "column_statistics": [
         {
             "column_name": "departments",
-            "num_records": 993,
+            "num_records": 24935,
             "num_null": 0,
             "num_unique": 5,
             "pyarrow_dtype": "string",
@@ -13,29 +13,29 @@
             "sampler_type": "category",
             "distribution_type": "categorical",
             "distribution": {
-                "most_common_value": "Computer Science and Engineering",
+                "most_common_value": "Mechanical Engineering",
                 "least_common_value": "Industrial Engineering",
                 "histogram": {
                     "categories": [
-                        "Computer Science and Engineering",
-                        "Chemical Engineering",
-                        "Electrical and Computer Engineering",
                         "Mechanical Engineering",
+                        "Computer Science and Engineering",
+                        "Electrical and Computer Engineering",
+                        "Chemical Engineering",
                         "Industrial Engineering"
                     ],
                     "counts": [
-                        233,
-                        207,
-                        193,
-                        186,
-                        174
+                        5089,
+                        5003,
+                        4980,
+                        4967,
+                        4896
                     ]
                 }
             }
         },
         {
             "column_name": "department_staff",
-            "num_records": 993,
+            "num_records": 24935,
             "num_null": 0,
             "num_unique": 25,
             "pyarrow_dtype": "string",
@@ -44,69 +44,69 @@
             "sampler_type": "subcategory",
             "distribution_type": "categorical",
             "distribution": {
-                "most_common_value": "Dr. Yoma Torres",
-                "least_common_value": "Dr. Pedro Pedro",
+                "most_common_value": "Dr. Sierra David",
+                "least_common_value": "Dr. David Doomer",
                 "histogram": {
                     "categories": [
-                        "Dr. Yoma Torres",
-                        "Dr. Juan Midely",
-                        "Dr. Mark Shoots",
-                        "Dr. Kaige Lu",
-                        "Dr. David Doomer",
-                        "Dr. Edward Otto",
-                        "Dr. Easydoro Rey",
-                        "Dr. Ludwig Jose",
-                        "Dr. William Tercero Gallina",
                         "Dr. Sierra David",
-                        "Dr. Domingo Domingo Rodriguez",
-                        "Dr. Arturo Rey",
+                        "Dr. Ludwig Jose",
+                        "Dr. Brand Coolriel",
                         "Dr. Juan Patrollo",
-                        "Dr. Hector Carlos Carlos",
-                        "Dr. Osvaldo Cordova",
+                        "Dr. Edward Otto",
+                        "Dr. Kaige Lu",
+                        "Dr. Yoma Torres",
                         "Dr. David Barrio Gonzales",
                         "Dra. Patricia Bermuda Otto",
-                        "Dr. Brand Coolriel",
-                        "Dr. Agosto Rulla Toro",
+                        "Dr. Pedro Pedro",
+                        "Dr. Easydoro Rey",
+                        "Dr. Arturo Rey",
                         "Dr. Cordova Bonilla",
-                        "Dra. Marie Curie",
+                        "Dr. Agosto Rulla Toro",
+                        "Dr. Domingo Domingo Rodriguez",
+                        "Dr. Osvaldo Cordova",
+                        "Dr. Juan Midely",
+                        "Dr. Mark Shoots",
                         "Assistant Professor Sam Olive Bonicia",
-                        "Dr. Mauricio Rivera Dominguez",
+                        "Dra. Marie Curie",
+                        "Dr. William Tercero Gallina",
                         "Dr. Gather Shun",
-                        "Dr. Pedro Pedro"
+                        "Dr. Hector Carlos Carlos",
+                        "Dr. Mauricio Rivera Dominguez",
+                        "Dr. David Doomer"
                     ],
                     "counts": [
-                        55,
-                        52,
-                        49,
-                        48,
-                        46,
-                        44,
-                        44,
-                        43,
-                        43,
-                        42,
-                        42,
-                        41,
-                        41,
-                        41,
-                        41,
-                        39,
-                        38,
-                        35,
-                        34,
-                        33,
-                        32,
-                        30,
-                        30,
-                        30,
-                        20
+                        1055,
+                        1039,
+                        1039,
+                        1037,
+                        1033,
+                        1027,
+                        1009,
+                        1008,
+                        1005,
+                        1000,
+                        997,
+                        995,
+                        993,
+                        992,
+                        990,
+                        986,
+                        986,
+                        983,
+                        976,
+                        972,
+                        970,
+                        967,
+                        961,
+                        959,
+                        956
                     ]
                 }
             }
         },
         {
             "column_name": "subject",
-            "num_records": 993,
+            "num_records": 24935,
             "num_null": 0,
             "num_unique": 5,
             "pyarrow_dtype": "string",
@@ -115,29 +115,29 @@
             "sampler_type": "category",
             "distribution_type": "categorical",
             "distribution": {
-                "most_common_value": "remote research opportunity",
-                "least_common_value": "Internship",
+                "most_common_value": "research assistant",
+                "least_common_value": "administrative assistant",
                 "histogram": {
                     "categories": [
-                        "remote research opportunity",
                         "research assistant",
-                        "administrative assistant",
+                        "remote research opportunity",
                         "research opportunity",
-                        "Internship"
+                        "Internship",
+                        "administrative assistant"
                     ],
                     "counts": [
-                        281,
-                        280,
-                        147,
-                        144,
-                        141
+                        7135,
+                        6964,
+                        3660,
+                        3601,
+                        3575
                     ]
                 }
             }
         },
         {
             "column_name": "weekly_pay",
-            "num_records": 993,
+            "num_records": 24935,
             "num_null": 0,
             "num_unique": 5,
             "pyarrow_dtype": "int64",
@@ -146,38 +146,38 @@
             "sampler_type": "category",
             "distribution_type": "categorical",
             "distribution": {
-                "most_common_value": 300,
+                "most_common_value": 275,
                 "least_common_value": 350,
                 "histogram": {
                     "categories": [
-                        300,
                         275,
-                        315,
+                        300,
                         250,
+                        315,
                         350
                     ],
                     "counts": [
-                        286,
-                        282,
-                        146,
-                        145,
-                        134
+                        7192,
+                        7146,
+                        3664,
+                        3482,
+                        3451
                     ]
                 }
             }
         },
         {
             "column_name": "student_name",
-            "num_records": 993,
+            "num_records": 24935,
             "num_null": 0,
-            "num_unique": 992,
+            "num_unique": 22849,
             "pyarrow_dtype": "string",
             "simple_dtype": "string",
             "column_type": "expression"
         },
         {
             "column_name": "student_age",
-            "num_records": 993,
+            "num_records": 24935,
             "num_null": 0,
             "num_unique": 13,
             "pyarrow_dtype": "int64",
@@ -185,34 +185,37 @@
             "column_type": "expression"
         },
         {
-            "column_name": "email_subject",
-            "num_records": 993,
+            "column_name": "email_content",
+            "num_records": 24935,
             "num_null": 0,
-            "num_unique": 341,
-            "pyarrow_dtype": "string",
-            "simple_dtype": "string",
-            "column_type": "llm-text",
-            "completion_tokens_mean": 12.49,
-            "completion_tokens_median": 12.0,
-            "completion_tokens_stddev": 1.53,
-            "prompt_tokens_mean": 54.88,
-            "prompt_tokens_median": 55.0,
-            "prompt_tokens_stddev": 1.12
+            "num_unique": 24935,
+            "pyarrow_dtype": "struct<body: string, subject: string>",
+            "simple_dtype": "dict",
+            "column_type": "llm-structured",
+            "completion_tokens_mean": 101.23,
+            "completion_tokens_median": 95.0,
+            "completion_tokens_stddev": 22.62,
+            "prompt_tokens_mean": 299.32,
+            "prompt_tokens_median": 297.0,
+            "prompt_tokens_stddev": 5.29
         },
         {
-            "column_name": "body",
-            "num_records": 993,
+            "column_name": "label",
+            "num_records": 24935,
             "num_null": 0,
-            "num_unique": 993,
-            "pyarrow_dtype": "string",
-            "simple_dtype": "string",
-            "column_type": "llm-text",
-            "completion_tokens_mean": 230.98,
-            "completion_tokens_median": 230.0,
-            "completion_tokens_stddev": 24.3,
-            "prompt_tokens_mean": 179.37,
-            "prompt_tokens_median": 178.0,
-            "prompt_tokens_stddev": 6.14
+            "num_unique": 1,
+            "pyarrow_dtype": "int64",
+            "simple_dtype": "int",
+            "column_type": "sampler",
+            "sampler_type": "uniform",
+            "distribution_type": "numerical",
+            "distribution": {
+                "min": 1,
+                "max": 1,
+                "mean": 1.0,
+                "stddev": 0.0,
+                "median": 1.0
+            }
         }
     ],
     "side_effect_column_names": [

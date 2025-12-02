@@ -54,10 +54,10 @@ model_configs = [
         model=MODEL_ID,
         provider=MODEL_PROVIDER,
         inference_parameters=InferenceParameters(
-            temperature=0.8,
+            temperature=0.9,
             top_p=1.0,
-            max_tokens=1024,
-            max_parallel_requests=12
+            max_tokens=1500,
+            max_parallel_requests=4,
         ),
     )
 ]
@@ -80,6 +80,11 @@ config_builder.info.sampler_table
 #         description="The price of the product", ge=10, le=1000, decimal_places=2
 #     )
 
+class Email(BaseModel):
+    subject: str = Field(description="Email Subject")
+    body: str = Field(description="Email Body")
+
+
 
 # class ProductReview(BaseModel):
 #     rating: int = Field(description="The rating of the product", ge=1, le=5)
@@ -87,6 +92,9 @@ config_builder.info.sampler_table
 #         description="The mood of the customer"
 #     )
 #     review: str = Field(description="A review of the product")
+
+
+
 
 #Defining a Student Object to be created in one go
 # class Student(BaseModel):
@@ -229,43 +237,94 @@ config_builder.add_column(
 # )
 
 
+# config_builder.add_column(
+#     LLMTextColumnConfig(
+#         name="email_subject",
+#         prompt=(
+#                 "Create an email subject from '{{subject}}' category, offering a position relating " 
+#                 "to the university of Puerto Rico's '{{departments}}'. The subject should not be longer than 1 sentence. " 
+#                 "The subject should be direct and concise about the position offered."
+#                 ),
+#         system_prompt=SYSTEM_PROMPT,
+#         model_alias=MODEL_ALIAS,
+#     )
+# )
+
+# config_builder.add_column(
+#     LLMTextColumnConfig(
+#         name="body",
+#         prompt=(
+#                 "Create an email body text that offers a job position from the '{{subject}}' category, related to the University of Puerto Rico " 
+#                 "at Mayaguez '{{departments}}' department directed to the Students of said department. The email body text provides a description of the job position displayed in a list. "
+#                 "Keep the job description vague and short. " 
+#                 "The email body text should list the requirements needed for the job position. "
+#                 "The requirements must have a low barrier of entry for the students at said department. "
+#                 "The email should have the weekly pay listed being '{{weekly_pay}}'. "
+#                 "The email should be signed off with the name of the '{{department_staff}}' "
+#                 "The sign off should have the email of the professor '{{ department_staff.split()[1] | lower }}.{{ department_staff.split()[-1] | lower }}@upr.edu "  
+#                 "{% if student_age < 22 %}"
+#                 "Address the student directly by '{{student_name}}' "
+#                 "Change the requirements to say that there's no prior experience needed for the job "
+#                 "{% else %}"
+#                 "Address the student body of the '{{departments}}' as a whole. "
+#                 "{% endif %}"
+#                 ),
+#                 system_prompt=SYSTEM_PROMPT,
+#                 model_alias=MODEL_ALIAS,
+#     )
+# )
+
 config_builder.add_column(
-    LLMTextColumnConfig(
-        name="email_subject",
+    LLMStructuredColumnConfig(
+        name="email_content",
         prompt=(
-                "Create an email subject from '{{subject}}' category, offering a position relating " 
-                "to the university of Puerto Rico's '{{departments}}'. The subject should not be longer than 1 sentence. " 
-                "The subject should be direct and concise about the position offered."
-                ),
+            "Create an email body and subject that looks to advertise a job position from the '{{subject}}' category, related to the University of Puerto Rico " 
+            "at Mayaguez '{{departments}}' department directed to the Students of said department. "
+            "subject: Direct and concise, 1 sentence max. "
+            "Body: The email body provides a description of the job position displayed in a list. "
+            "Keep the job description vague and short. " 
+            "list the requirements needed for the job position. "
+            "The requirements must have a low barrier of entry for the students at said department. "
+            "Have the weekly pay listed being '{{weekly_pay}}'. "
+            "The email should be signed off with the name of the '{{department_staff}}' "
+            "The sign off should have the email of the professor '{{ department_staff.split()[1] | lower }}.{{ department_staff.split()[-1] | lower }}@upr.edu "  
+            "{% if student_age < 22 %}"
+            "Address the student directly by '{{student_name}}' "
+            "Change the requirements to say that there's no prior experience needed for the job "
+            "{% else %}"
+            "Address the student body of the '{{departments}}' as a whole. "
+            "{% endif %}"
+        ),
         system_prompt=SYSTEM_PROMPT,
+        output_format=Email,
         model_alias=MODEL_ALIAS,
     )
 )
 
+
+# "Create an email with subject and body offering a position from '{{subject}}' category "
+#             "for the University of Puerto Rico at Mayaguez '{{departments}}' department. "
+#             "subject: Show urgency but don't explicitly say it, 1 sentence max "
+#             "Email body Address students of the department. Include:"
+#             "  - vague job description in a list"
+#             "  - Low barrier entry requirements"
+#             "  - Weekly pay: {{weekly_pay}}"
+#             "  - Signed by: {{department_staff}}"
+#             "  - Email: {{ department_staff.split()[1] | lower }}.{{ department_staff.split()[-1] | lower }}@upr.edu "
+#             "{% if student_age < 22 %}"
+#             "   - Address '{{student_name}}' directly"
+#             "{% else %}"
+#             "   - Address entire '{{departments}}' student body"
+#             "{% endif %}"
+
 config_builder.add_column(
-    LLMTextColumnConfig(
-        name="body",
-        prompt=(
-                "Create an email body text that offers a job position from the '{{subject}}' category, related to the University of Puerto Rico " 
-                "at Mayaguez '{{departments}}' department directed to the Students of '{{departments}}'. The email body text provides a description of the job position displayed in a list. "
-                "Keep the job description vague and short. " 
-                "The email body text should list the requirements needed for the job position. "
-                "The requirements must have a low barrier of entry for the students in the '{{departments}}' field. "
-                "The email should have the weekly pay listed being '{{weekly_pay}}'. "
-                "The email should be signed off with the name of the '{{department_staff}}' "
-                "The sign off should have the email of the professor '{{ department_staff.split()[1] | lower }}.{{ department_staff.split()[-1] | lower }}@upr.edu "  
-                "{% if student_age < 22 %}"
-                "Address the student directly by '{{student_name}}' "
-                "Change the requirements to say that there's no prior experience needed for the job "
-                "{% else %}"
-                "Address the student body of the '{{departments}}' as a whole. "
-                "{% endif %}"
-                ),
-                system_prompt=SYSTEM_PROMPT,
-                model_alias=MODEL_ALIAS,
+    SamplerColumnConfig(
+        name="label",
+        sampler_type=SamplerType.UNIFORM,
+        params=UniformSamplerParams(low=1, high=1),
+        convert_to="int"  # Optional: converts to integer
     )
 )
-
 # config_builder.add_column(
 #     LLMStructuredColumnConfig(
 #         name="body",
@@ -329,30 +388,30 @@ config_builder.validate()
 
 
 #------------------------------------FINALLY CREATE THE DATASET-----------------------------------
-# job_results = data_designer_client.create(config_builder, num_records=1000)
+job_results = data_designer_client.create(config_builder, num_records=25000)
 
-# # # This will block until the job is complete.
-# job_results.wait_until_done()
-
-
-
-# # Load the generated dataset as a pandas DataFrame.
-# dataset = job_results.load_dataset()
-
-# dataset.head()
+# # This will block until the job is complete.
+job_results.wait_until_done()
 
 
 
-# # Load the analysis results into memory.
-# analysis = job_results.load_analysis()
+# Load the generated dataset as a pandas DataFrame.
+dataset = job_results.load_dataset()
 
-# analysis.to_report()
+dataset.head()
 
 
-# OUTPUT_PATH = "GenDatasets"
 
-# # Download the job artifacts and save them to disk.
-# job_results.download_artifacts(
-#     output_path=OUTPUT_PATH,
-#     artifacts_folder_name="Phishing_Emails_test1",
-# );
+# Load the analysis results into memory.
+analysis = job_results.load_analysis()
+
+analysis.to_report()
+
+
+OUTPUT_PATH = "GenDatasets"
+
+# Download the job artifacts and save them to disk.
+job_results.download_artifacts(
+    output_path=OUTPUT_PATH,
+    artifacts_folder_name="Phishing_Emails_test1",
+);
