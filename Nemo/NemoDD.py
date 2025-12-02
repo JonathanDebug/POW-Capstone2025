@@ -55,9 +55,10 @@ model_configs = [
         provider=MODEL_PROVIDER,
         inference_parameters=InferenceParameters(
             temperature=0.9,
-            top_p=1.0,
-            max_tokens=1500,
-            max_parallel_requests=4,
+            top_p=0.9,
+            max_tokens=512,
+            max_parallel_requests=8,
+            timeout=45.
         ),
     )
 ]
@@ -71,35 +72,11 @@ config_builder.info.sampler_table
 
 # Configuring product Schema
 
-# We define a Product schema so that the name, description, and price are generated
-# in one go, with the types and constraints specified.
-# class Product(BaseModel):
-#     name: str = Field(description="The name of the product")
-#     description: str = Field(description="A description of the product")
-#     price: Decimal = Field(
-#         description="The price of the product", ge=10, le=1000, decimal_places=2
-#     )
-
-class Email(BaseModel):
-    subject: str = Field(description="Email Subject")
-    body: str = Field(description="Email Body")
+# class Email(BaseModel):
+#     subject: str = Field(description="The Email's Subject to grap the student's attention")
+#     text: str = Field(description="Email text body showcasing the entire email")
 
 
-
-# class ProductReview(BaseModel):
-#     rating: int = Field(description="The rating of the product", ge=1, le=5)
-#     customer_mood: Literal["irritated", "mad", "happy", "neutral", "excited"] = Field(
-#         description="The mood of the customer"
-#     )
-#     review: str = Field(description="A review of the product")
-
-
-
-
-#Defining a Student Object to be created in one go
-# class Student(BaseModel):
-#     name: str = Field(description="Full name of student"),
-#     age: int = Field(description="student age" ge=18,ge=30)
 
 
 ##---------------------------------Product review dataset test---------------------------------------
@@ -229,6 +206,17 @@ config_builder.add_column(
         dtype="int",
     )
 )
+config_builder.add_column(
+    SamplerColumnConfig(
+        name="email_style",
+        sampler_type=SamplerType.CATEGORY,
+        params=CategorySamplerParams(
+            values=["Predatory", "Friendly", "Casual"],
+            weights=[2,1,1],
+        )
+
+    )
+)
 
 
 
@@ -254,7 +242,7 @@ config_builder.add_column(
     LLMTextColumnConfig(
         name="body",
         prompt=(
-                "Create an email body text that offers a job position from the '{{subject}}' category, related to the University of Puerto Rico " 
+                "Create an email body text that offers a job position from the '{{subject}}' category, related to the University of Puerto Rico written in '{{email_style}}" 
                 "at Mayaguez '{{departments}}' department directed to the Students of said department. The email body text provides a description of the job position displayed in a list. "
                 "Keep the job description vague and short. " 
                 "The email body text should list the requirements needed for the job position. "
@@ -278,13 +266,12 @@ config_builder.add_column(
 #     LLMStructuredColumnConfig(
 #         name="email_content",
 #         prompt=(
-#             "Create an email body and subject that looks to advertise a job position from the '{{subject}}' category, related to the University of Puerto Rico " 
-#             "at Mayaguez '{{departments}}' department directed to the Students of said department. "
-#             "subject: Direct and concise, 1 sentence max. "
-#             "Body: The email body provides a description of the job position displayed in a list. "
-#             "Keep the job description vague and short. " 
-#             "list the requirements needed for the job position. "
-#             "The requirements must have a low barrier of entry for the students at said department. "
+#             "Create an Email offering a job position based on '{{subject}}' written in '{{email_style}}' addressed to the students of '{{departments}}' " 
+#             "with the following format: "
+#             "subject: Email subject related to the job position following the same style. 1 sentence max."
+#             "Body: The email body should provide a description of the job position displayed in a list. "
+#             "Keep the job description vague and short, followed by the job requirements. "
+#             "The requirements must have a low barrier of entry for the students of said department. "
 #             "Have the weekly pay listed being '{{weekly_pay}}'. "
 #             "The email should be signed off with the name of the '{{department_staff}}' "
 #             "The sign off should have the email of the professor '{{ department_staff.split()[1] | lower }}.{{ department_staff.split()[-1] | lower }}@upr.edu "  
@@ -388,9 +375,9 @@ config_builder.validate()
 
 
 #------------------------------------FINALLY CREATE THE DATASET-----------------------------------
-job_results = data_designer_client.create(config_builder, num_records=25000)
+job_results = data_designer_client.create(config_builder, num_records=100)
 
-# # This will block until the job is complete.
+# This will block until the job is complete.
 job_results.wait_until_done()
 
 
