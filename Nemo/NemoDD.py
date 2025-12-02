@@ -237,69 +237,69 @@ config_builder.add_column(
 # )
 
 
-# config_builder.add_column(
-#     LLMTextColumnConfig(
-#         name="email_subject",
-#         prompt=(
-#                 "Create an email subject from '{{subject}}' category, offering a position relating " 
-#                 "to the university of Puerto Rico's '{{departments}}'. The subject should not be longer than 1 sentence. " 
-#                 "The subject should be direct and concise about the position offered."
-#                 ),
-#         system_prompt=SYSTEM_PROMPT,
-#         model_alias=MODEL_ALIAS,
-#     )
-# )
-
-# config_builder.add_column(
-#     LLMTextColumnConfig(
-#         name="body",
-#         prompt=(
-#                 "Create an email body text that offers a job position from the '{{subject}}' category, related to the University of Puerto Rico " 
-#                 "at Mayaguez '{{departments}}' department directed to the Students of said department. The email body text provides a description of the job position displayed in a list. "
-#                 "Keep the job description vague and short. " 
-#                 "The email body text should list the requirements needed for the job position. "
-#                 "The requirements must have a low barrier of entry for the students at said department. "
-#                 "The email should have the weekly pay listed being '{{weekly_pay}}'. "
-#                 "The email should be signed off with the name of the '{{department_staff}}' "
-#                 "The sign off should have the email of the professor '{{ department_staff.split()[1] | lower }}.{{ department_staff.split()[-1] | lower }}@upr.edu "  
-#                 "{% if student_age < 22 %}"
-#                 "Address the student directly by '{{student_name}}' "
-#                 "Change the requirements to say that there's no prior experience needed for the job "
-#                 "{% else %}"
-#                 "Address the student body of the '{{departments}}' as a whole. "
-#                 "{% endif %}"
-#                 ),
-#                 system_prompt=SYSTEM_PROMPT,
-#                 model_alias=MODEL_ALIAS,
-#     )
-# )
-
 config_builder.add_column(
-    LLMStructuredColumnConfig(
-        name="email_content",
+    LLMTextColumnConfig(
+        name="email_subject",
         prompt=(
-            "Create an email body and subject that looks to advertise a job position from the '{{subject}}' category, related to the University of Puerto Rico " 
-            "at Mayaguez '{{departments}}' department directed to the Students of said department. "
-            "subject: Direct and concise, 1 sentence max. "
-            "Body: The email body provides a description of the job position displayed in a list. "
-            "Keep the job description vague and short. " 
-            "list the requirements needed for the job position. "
-            "The requirements must have a low barrier of entry for the students at said department. "
-            "Have the weekly pay listed being '{{weekly_pay}}'. "
-            "The email should be signed off with the name of the '{{department_staff}}' "
-            "The sign off should have the email of the professor '{{ department_staff.split()[1] | lower }}.{{ department_staff.split()[-1] | lower }}@upr.edu "  
-            "{% if student_age < 22 %}"
-            "Address the student directly by '{{student_name}}' "
-            "Change the requirements to say that there's no prior experience needed for the job "
-            "{% else %}"
-            "Address the student body of the '{{departments}}' as a whole. "
-            "{% endif %}"
-        ),
+                "Create an email subject from '{{subject}}' category, offering a position relating " 
+                "to the university of Puerto Rico's '{{departments}}'. The subject should not be longer than 1 sentence. " 
+                "The subject should be direct and concise about the position offered."
+                ),
         system_prompt=SYSTEM_PROMPT,
-        output_format=Email,
         model_alias=MODEL_ALIAS,
     )
 )
+
+config_builder.add_column(
+    LLMTextColumnConfig(
+        name="body",
+        prompt=(
+                "Create an email body text that offers a job position from the '{{subject}}' category, related to the University of Puerto Rico " 
+                "at Mayaguez '{{departments}}' department directed to the Students of said department. The email body text provides a description of the job position displayed in a list. "
+                "Keep the job description vague and short. " 
+                "The email body text should list the requirements needed for the job position. "
+                "The requirements must have a low barrier of entry for the students at said department. "
+                "The email should have the weekly pay listed being '{{weekly_pay}}'. "
+                "The email should be signed off with the name of the '{{department_staff}}' "
+                "The sign off should have the email of the professor '{{ department_staff.split()[1] | lower }}.{{ department_staff.split()[-1] | lower }}@upr.edu "  
+                "{% if student_age < 22 %}"
+                "Address the student directly by '{{student_name}}' "
+                "Change the requirements to say that there's no prior experience needed for the job "
+                "{% else %}"
+                "Address the student body of the '{{departments}}' as a whole. "
+                "{% endif %}"
+                ),
+                system_prompt=SYSTEM_PROMPT,
+                model_alias=MODEL_ALIAS,
+    )
+)
+
+# config_builder.add_column(
+#     LLMStructuredColumnConfig(
+#         name="email_content",
+#         prompt=(
+#             "Create an email body and subject that looks to advertise a job position from the '{{subject}}' category, related to the University of Puerto Rico " 
+#             "at Mayaguez '{{departments}}' department directed to the Students of said department. "
+#             "subject: Direct and concise, 1 sentence max. "
+#             "Body: The email body provides a description of the job position displayed in a list. "
+#             "Keep the job description vague and short. " 
+#             "list the requirements needed for the job position. "
+#             "The requirements must have a low barrier of entry for the students at said department. "
+#             "Have the weekly pay listed being '{{weekly_pay}}'. "
+#             "The email should be signed off with the name of the '{{department_staff}}' "
+#             "The sign off should have the email of the professor '{{ department_staff.split()[1] | lower }}.{{ department_staff.split()[-1] | lower }}@upr.edu "  
+#             "{% if student_age < 22 %}"
+#             "Address the student directly by '{{student_name}}' "
+#             "Change the requirements to say that there's no prior experience needed for the job "
+#             "{% else %}"
+#             "Address the student body of the '{{departments}}' as a whole. "
+#             "{% endif %}"
+#         ),
+#         system_prompt=SYSTEM_PROMPT,
+#         output_format=Email,
+#         model_alias=MODEL_ALIAS,
+#     )
+# )
 
 
 # "Create an email with subject and body offering a position from '{{subject}}' category "
