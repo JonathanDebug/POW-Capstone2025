@@ -57,7 +57,7 @@ model_configs = [
             temperature=0.9,
             top_p=0.9,
             max_tokens=512,
-            max_parallel_requests=8,
+            max_parallel_requests=4,
             timeout=45.
         ),
     )
@@ -375,7 +375,7 @@ config_builder.validate()
 
 
 #------------------------------------FINALLY CREATE THE DATASET-----------------------------------
-job_results = data_designer_client.create(config_builder, num_records=100)
+job_results = data_designer_client.create(config_builder, num_records=25000)
 
 # This will block until the job is complete.
 job_results.wait_until_done()
