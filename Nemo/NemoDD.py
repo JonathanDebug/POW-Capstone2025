@@ -262,6 +262,16 @@ config_builder.add_column(
     )
 )
 
+
+config_builder.add_column(
+    SamplerColumnConfig(
+        name="label",
+        sampler_type=SamplerType.UNIFORM,
+        params=UniformSamplerParams(low=1, high=1),
+        convert_to="int"  # Optional: converts to integer
+    )
+)
+
 # config_builder.add_column(
 #     LLMStructuredColumnConfig(
 #         name="email_content",
@@ -288,66 +298,6 @@ config_builder.add_column(
 #     )
 # )
 
-
-# "Create an email with subject and body offering a position from '{{subject}}' category "
-#             "for the University of Puerto Rico at Mayaguez '{{departments}}' department. "
-#             "subject: Show urgency but don't explicitly say it, 1 sentence max "
-#             "Email body Address students of the department. Include:"
-#             "  - vague job description in a list"
-#             "  - Low barrier entry requirements"
-#             "  - Weekly pay: {{weekly_pay}}"
-#             "  - Signed by: {{department_staff}}"
-#             "  - Email: {{ department_staff.split()[1] | lower }}.{{ department_staff.split()[-1] | lower }}@upr.edu "
-#             "{% if student_age < 22 %}"
-#             "   - Address '{{student_name}}' directly"
-#             "{% else %}"
-#             "   - Address entire '{{departments}}' student body"
-#             "{% endif %}"
-
-config_builder.add_column(
-    SamplerColumnConfig(
-        name="label",
-        sampler_type=SamplerType.UNIFORM,
-        params=UniformSamplerParams(low=1, high=1),
-        convert_to="int"  # Optional: converts to integer
-    )
-)
-# config_builder.add_column(
-#     LLMStructuredColumnConfig(
-#         name="body",
-#         prompt=(
-#             "Create a product in the '{{ product_category }}' category, focusing on products  "
-#             "related to '{{ product_subcategory }}'. The target age range of the ideal customer is "
-#             "{{ target_age_range }} years old. The product should be priced between $10 and $1000."
-#         ),
-#         system_prompt=SYSTEM_PROMPT,
-#         output_format=Product,
-#         model_alias=MODEL_ALIAS,
-#     )
-# )
-
-# We can even use if/else logic in our Jinja expressions to create more complex prompt patterns.
-# config_builder.add_column(
-#     LLMStructuredColumnConfig(
-#         name="customer_review",
-#         prompt=(
-#             "Your task is to write a review for the following product:\n\n"
-#             "Product Name: {{ product.name }}\n"
-#             "Product Description: {{ product.description }}\n"
-#             "Price: {{ product.price }}\n\n"
-#             "Imagine your name is {{ customer_name }} and you are from {{ customer.city }}, {{ customer.state }}. "
-#             "Write the review in a style that is '{{ review_style }}'."
-#             "{% if target_age_range == '18-25' %}"
-#             "Make sure the review is more informal and conversational."
-#             "{% else %}"
-#             "Make sure the review is more formal and structured."
-#             "{% endif %}"
-#         ),
-#         system_prompt=SYSTEM_PROMPT,
-#         output_format=ProductReview,
-#         model_alias=MODEL_ALIAS,
-#     )
-# )
 
 config_builder.validate()
 
