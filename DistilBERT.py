@@ -9,7 +9,7 @@ import kagglehub
 import shutil
 from datasets import Dataset
 from sklearn.model_selection import train_test_split
-from sklearn.metrics import accuracy_score, confusion_matrix
+from sklearn.metrics import accuracy_score, confusion_matrix, classification_report
 import numpy as np
 
 
@@ -313,6 +313,8 @@ def evaluate_model():
     print(f"\n Accuracy: {acc * 100:.2f}%")
     print("\n Confusion Matrix:")
     print(cm)
+    print("\n Classification Report:")
+    print(classification_report(y_true, y_pred))
 
 
 # =============================
@@ -335,8 +337,8 @@ if __name__ == "__main__":
     # result = pipe("Helllo! we are excited to offer you a free iPhone! Click the link below to claim your prize.")
     # print(f"Prediction result: {result}")
 
-
-
-
+# Optional: function to clean HTML
+def clean_html(raw_html):
+    return BeautifulSoup(raw_html, "html.parser").get_text()
 
 
