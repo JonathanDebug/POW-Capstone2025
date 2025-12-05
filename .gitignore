@@ -3,3 +3,6 @@
 # But track this file
 !DistilBERT.py
 !.gitignore
+!Extension
+!server.py
+!requirements.txt
