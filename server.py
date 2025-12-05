@@ -42,7 +42,7 @@ def analyze_email(email:Email):
     domain = sender.split("@")[1]
     isUPR = True
     print("Domain: " , domain)
-    if domain != "upr.edu":
+    if domain != "upr.edu>":
         print("Email not from UPR")
         isUPR = False
     else:
@@ -53,12 +53,17 @@ def analyze_email(email:Email):
 
 
     score = output["score"]
-    formatted_score = math.floor(score * 100) / 100
+    formatted_score = math.floor(score * 100)
     label = ""
     if output["label"] == "LABEL_0":
         label = False
     else:
         label = True
+
+    if label:
+        print("Phishing detected")
+    else:
+        print("Phishing not detected")
 
 
 

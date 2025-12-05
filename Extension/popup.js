@@ -28,14 +28,9 @@ document.getElementById('btnScan').addEventListener('click', async () => {
 
     const email = response.email;
 
-    const text = `
-Subject: ${email.subject}
-Sender:  ${email.sender}
-Body:    ${email.body.substring(0, 200)}...
-
-Phishing Prediction: ${response.phish ? "Yes" : "No"}
-Accuracy: ${response.accuracy}
-From UPR: ${response.upr ? "Yes" : "No"}
+    const text = `${response.phish ? "Possible phishing detected. Do NOT click links or download attachments" : "No phishing was detected in this email."}
+${response.upr ? "This email was sent from an official UPR account." : "This message did NOT originate from an official UPR account. Be cautious with links or attachments."}
+Confidence: ${response.accuracy}%
     `;
 
     console.log("Extracted email:", email);
@@ -43,7 +38,7 @@ From UPR: ${response.upr ? "Yes" : "No"}
 
     // Copy to clipboard
     navigator.clipboard.writeText(text).then(() => {
-      alert(`Email scanned!\nPhishing: ${response.phish ? "Yes" : "No"}\nAccuracy: ${response.accuracy}`);
+     alert(`Email scanned!\n\n${text}`);
     });
   });
 });
