@@ -36,21 +36,20 @@ classifier = pipeline("text-classification",
 
 @app.post("/analyze-email")
 def analyze_email(email:Email):
-    print("Analyzing Email")
+    print("Analyzing Email...")
     text = f"{email.subject} {email.body}"
     sender = email.sender
-    domain = sender.split("@")[1]
-    isUPR = True
-    print("Domain: " , domain)
-    if domain != "upr.edu>":
-        print("Email not from UPR")
-        isUPR = False
-    else:
-        print("Email is from UPR")
-        isUPR = True
+    domain = "Not found"
+    isUPR = False
+    if "@" in sender:
+        domain = sender.split("@")[1]
+        if domain != "upr.edu>":
+            print("Email not from UPR")
+            isUPR = False
+        else:
+            isUPR = True
 
     output = classifier(text)[0]  # this is a dict: {"label": "...", "score": 0.xx}
-
 
     score = output["score"]
     formatted_score = math.floor(score * 100)
@@ -60,8 +59,13 @@ def analyze_email(email:Email):
     else:
         label = True
 
+    print("Sender: " + sender)
+    print("Content: " + text)
+    print("Domain: " + domain)
+    print("Label: " + output["label"])
+
     if label:
-        print("Phishing detected")
+        print("AI Model has detected phishing in this email.")
     else:
         print("Phishing not detected")
 
