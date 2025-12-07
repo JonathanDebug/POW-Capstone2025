@@ -5,7 +5,7 @@ function extractEmailData() {
   try {
     const subject = document.querySelector(".f77rj")?.textContent || 'Sender not found';
     const sender = document.querySelector('span.OZZZK')?.textContent || 'Sender not found';
-    const body = document.querySelector('[aria-label="Message body"]')?.innerText || 'Body not found';
+    const body = document.querySelector('[role="document"]')?.innerText || 'Body not found';
 
     return {
       subject: subject.trim(),
