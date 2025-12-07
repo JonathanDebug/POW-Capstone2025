@@ -22,7 +22,7 @@ function extractEmailData() {
       'Sender not found';
 
     //body in the dom we can look it up with the aria-label "Message body"
-    const body = document.querySelector('[aria-label="Message body"]')?.innerText ||
+    const body = document.querySelector('[role="document"]')?.innerText ||
       'Body not found';
 
 
