@@ -41,9 +41,11 @@ def analyze_email(email:Email):
     sender = email.sender
     domain = "Not found"
     isUPR = False
-    if "@" in sender:
-        domain = sender.split("@")[1]
-        if domain != "upr.edu>":
+    if "<" in sender and "@" in sender:
+        domain = sender.split("<")[1]
+        domain = domain.split(">")[0]
+        domain = domain.split("@")[1]
+        if domain != "upr.edu":
             print("Email not from UPR")
             isUPR = False
         else:
@@ -59,17 +61,19 @@ def analyze_email(email:Email):
     else:
         label = True
 
+
     print("Sender: " + sender)
     print("Content: " + text)
+    print("#######################")
     print("Domain: " + domain)
+    print("Domain is from UPR: " + str(isUPR))
     print("Label: " + output["label"])
 
     if label:
         print("AI Model has detected phishing in this email.")
     else:
         print("Phishing not detected")
-
-
+    print("#######################")
 
     return{
         "phish": label,
