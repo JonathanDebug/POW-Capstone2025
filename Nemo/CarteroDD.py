@@ -98,15 +98,17 @@ config_builder.add_column(
 
 config_builder.add_column(
     SamplerColumnConfig(
-        name="departments",
+        name="Activity_topics",
         sampler_type=SamplerType.CATEGORY,
         params=CategorySamplerParams(
             values=[
-                "Computer Science and Engineering",
-                "Electrical and Computer Engineering",
-                "Mechanical Engineering",
-                "Industrial Engineering",
-                "Chemical Engineering",
+                "Academics & Research",
+                "Campus Life & Events",
+                "Local Oportunities & Engagement",
+                "Logistics & Operations",
+                "Health, Safety & Wellnes",
+                "Puerto Rico Specific",
+                "Featured Section",
             ],
         ),
     )
@@ -114,46 +116,50 @@ config_builder.add_column(
 
 config_builder.add_column(
     SamplerColumnConfig(
-        name="department_staff",
+        name="activity",
         sampler_type=SamplerType.SUBCATEGORY,
         params=SubcategorySamplerParams(
             category="departments",
             values={
-                "Computer Science and Engineering": [
-                    "Dr. William Tercero Gallina",
-                    "Dr. Kaige Lu",
-                    "Dr. Mark Shoots",
-                    "Dr. Juan Midely",
-                    "Dr. Juan Patrollo",
+                "Academics & Research": [
+                    "Deadline Alerts",
+                    "Workshop & Seminar Highlights",
+                    "Research Opportunities",
+                    "Faculty Spotlight",
                 ],
-                "Electrical and Computer Engineering": [
-                    "Dr. Easydoro Rey",
-                    "Dr. Gather Shun",
-                    "Dr. Edward Otto",
-                    "Dr. Cordova Bonilla",
-                    "Dr. Domingo Domingo Rodriguez",
+                "Campus Life & Events": [
+                    "Today's Events",
+                    "Student Org Spotlight",
+                    "Arts & Culture",
+                    "Athletics & Recreation",
                 ],
-                "Mechanical Engineering": [
-                    "Dr. Sierra David",
-                    "Dr. Ludwig Jose",
-                    "Dr. Brand Coolriel",
-                    "Dr. David Doomer",
-                    "Dr. Pedro Pedro",
+                "Local Opportunities & Engagement": [
+                    "Internships & Jobs",
+                    "Community Service",
+                    "Cultural Events in PR",
+                    "Local Business Highlights",
                 ],
-                "Industrial Engineering": [
-                    "Dr. Agosto Rulla Toro",
-                    "Dr. Hector Carlos Carlos",
-                    "Dr. David Barrio Gonzales",
-                    "Assistant Professor Sam Olive Bonicia",
-                    "Dr. Mauricio Rivera Dominguez",
+                "Logistics & Operations": [
+                    "Campus Announcements",
+                    "Transportation",
+                    "Facility Hours",
                 ],
-                "Chemical Engineering": [
-                    "Dra. Marie Curie",
-                    "Dr. Yoma Torres",
-                    "Dra. Patricia Bermuda Otto",
-                    "Dr. Osvaldo Cordova",
-                    "Dr. Arturo Rey",
+                "Health, Safety & Wellness": [
+                    "Health Services",
+                    "Safety Updates",
+                    "Wellness Tips",
                 ],
+                "Puerto Rico Specific": [
+                  "Weather & Preparedness", 
+                  "Heritage & History",
+                  "Sustainability & Environment",
+                  "Language & Culture",
+                ],
+                "Featured Section": [
+                  "Conoce tu Isla",
+                  "Student of the Day/Week",
+                  "Did you know? Fun Facts about Puerto Rico"
+                ]
             },
         ),
     )
