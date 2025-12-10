@@ -6,7 +6,7 @@ import math
 from fastapi.middleware.cors import CORSMiddleware
 
 
-# Command to run server: uvicorn server:app --reload --host 0.0.0.0 --port 8000
+# Command to run server: "uvicorn server:app --reload --host 0.0.0.0 --port 8000"
 app = FastAPI()
 
 # Allow CORS

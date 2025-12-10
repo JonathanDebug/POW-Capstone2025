@@ -224,11 +224,43 @@ def load_data():
     return full_df
 
 
+def load_synth_data():
+    dfs = []
+    dataset_paths = ["D:\github\POW-Capstone2025\GenDatasets\Phishing_Emails_test2\CSVs\Synth_POW.csv"]
+    for path in dataset_paths:
+        print(f"Loading dataset from: {path}")
+
+        df = pd.read_csv(path, encoding="utf-8", on_bad_lines='skip')
+
+        # Check columns
+        print("Columns found:", df.columns.tolist())
+
+        # Combine subject + body into one text column
+        if "subject" in df.columns and "body" in df.columns:
+            df["text"] = df["subject"].fillna("") + " " + df["body"].fillna("")
+        elif "email_subject" in df.columns and "body" in df.columns:
+            df["text"] = df["email_subject"].fillna("") + " " + df["body"].fillna("")
+        elif "body" in df.columns:
+            df["text"] = df["body"].fillna("")
+        else:
+            raise ValueError("Dataset must contain either 'body' or 'text' column.")
+
+        # Keep only text + label for training
+        df = df[["text", "label"]]
+        print("Loaded", len(df), "emails.")
+        dfs.append(df)
+
+    # Combine all datasets
+    full_df = pd.concat(dfs, ignore_index=True)
+    print("Total emails loaded from all datasets:", len(full_df))
+    return full_df
+
+
 
 
 def train_model(df):
     # Split train/test 80% train 20% test
-    train_df, test_df = train_test_split(df, test_size=0.2, random_state=42)
+    train_df, test_df = train_test_split(df, test_size=0.5, random_state=42)
 
     # Convert to HF datasets
     train_ds = Dataset.from_pandas(train_df)
@@ -290,6 +322,47 @@ def evaluate_model():
     # Load test dataset
     df = load_data()
     train_df, test_df = train_test_split(df, test_size=0.2, random_state=42)
+
+    y_true = test_df["label"].tolist()
+    y_pred = []
+
+    print("Running predictions on test set...")
+    for text in test_df["text"]:
+        result = pipe(text)[0]  # pipeline returns a list of dicts
+        label = result["label"]
+        # Convert 'LABEL_0'/'LABEL_1' to 0/1
+        if label in ["LABEL_0", "Safe"]:
+            y_pred.append(0)
+        else:
+            y_pred.append(1)
+
+    y_true = np.array(y_true)
+    y_pred = np.array(y_pred)
+
+    acc = accuracy_score(y_true, y_pred)
+    cm = confusion_matrix(y_true, y_pred)
+
+    print(f"\n Accuracy: {acc * 100:.2f}%")
+    print("\n Confusion Matrix:")
+    print(cm)
+    print("\n Classification Report:")
+    print(classification_report(y_true, y_pred))
+
+
+
+def evaluate_synth_model():
+    # Load your fine-tuned pipeline
+    pipe = pipeline("text-classification",
+                    model="./bert-phishing-final",
+                    tokenizer="./bert-phishing-final",
+                    truncation=True,
+                    max_length=512,
+                    padding="max_length"
+    )
+
+    # Load test dataset
+    df = load_synth_data()
+    train_df, test_df = train_test_split(df, test_size=0.20, random_state=42)
 
     y_true = test_df["label"].tolist()
     y_pred = []

@@ -1,0 +1,182 @@
+{
+    "num_records": 24841,
+    "target_num_records": 25000,
+    "column_statistics": [
+        {
+            "column_name": "Activity_topics",
+            "num_records": 24841,
+            "num_null": 0,
+            "num_unique": 7,
+            "pyarrow_dtype": "string",
+            "simple_dtype": "string",
+            "column_type": "sampler",
+            "sampler_type": "category",
+            "distribution_type": "categorical",
+            "distribution": {
+                "most_common_value": "Health, Safety & Wellness",
+                "least_common_value": "Puerto Rico Specific",
+                "histogram": {
+                    "categories": [
+                        "Health, Safety & Wellness",
+                        "Local Opportunities & Engagement",
+                        "Campus Life & Events",
+                        "Academics & Research",
+                        "Featured Section",
+                        "Logistics & Operations",
+                        "Puerto Rico Specific"
+                    ],
+                    "counts": [
+                        3687,
+                        3580,
+                        3563,
+                        3551,
+                        3494,
+                        3491,
+                        3475
+                    ]
+                }
+            }
+        },
+        {
+            "column_name": "Activity",
+            "num_records": 24841,
+            "num_null": 0,
+            "num_unique": 25,
+            "pyarrow_dtype": "string",
+            "simple_dtype": "string",
+            "column_type": "sampler",
+            "sampler_type": "subcategory",
+            "distribution_type": "categorical",
+            "distribution": {
+                "most_common_value": "Wellness Tips",
+                "least_common_value": "Heritage & History",
+                "histogram": {
+                    "categories": [
+                        "Wellness Tips",
+                        "Health Services",
+                        "Facility Hours",
+                        "Did you know? Fun Facts about Puerto Rico",
+                        "Safety Updates",
+                        "Transportation",
+                        "Conoce tu Isla",
+                        "Student of the Day/Week",
+                        "Campus Announcements",
+                        "Sustainability & Environment",
+                        "Workshop & Seminar Highlights",
+                        "Community Service",
+                        "Internships & Jobs",
+                        "Arts & Culture",
+                        "Research Opportunities",
+                        "Local Business Highlights",
+                        "Athletics & Recreation",
+                        "Faculty Spotlight",
+                        "Today's Events",
+                        "Student Org Spotlight",
+                        "Cultural Events in PR",
+                        "Weather & Preparedness",
+                        "Language & Culture",
+                        "Deadline Alerts",
+                        "Heritage & History"
+                    ],
+                    "counts": [
+                        1272,
+                        1241,
+                        1201,
+                        1199,
+                        1174,
+                        1168,
+                        1148,
+                        1147,
+                        1122,
+                        922,
+                        921,
+                        909,
+                        903,
+                        901,
+                        900,
+                        899,
+                        893,
+                        889,
+                        888,
+                        881,
+                        869,
+                        864,
+                        850,
+                        841,
+                        839
+                    ]
+                }
+            }
+        },
+        {
+            "column_name": "num_events",
+            "num_records": 24841,
+            "num_null": 0,
+            "num_unique": 4,
+            "pyarrow_dtype": "int64",
+            "simple_dtype": "int",
+            "column_type": "sampler",
+            "sampler_type": "uniform",
+            "distribution_type": "numerical",
+            "distribution": {
+                "min": 4,
+                "max": 7,
+                "mean": 5.5,
+                "stddev": 0.96,
+                "median": 5.0
+            }
+        },
+        {
+            "column_name": "email_subject",
+            "num_records": 24841,
+            "num_null": 0,
+            "num_unique": 19365,
+            "pyarrow_dtype": "string",
+            "simple_dtype": "string",
+            "column_type": "llm-text",
+            "completion_tokens_mean": 18.16,
+            "completion_tokens_median": 18.0,
+            "completion_tokens_stddev": 3.75,
+            "prompt_tokens_mean": 53.56,
+            "prompt_tokens_median": 53.0,
+            "prompt_tokens_stddev": 1.57
+        },
+        {
+            "column_name": "body",
+            "num_records": 24841,
+            "num_null": 0,
+            "num_unique": 24841,
+            "pyarrow_dtype": "string",
+            "simple_dtype": "string",
+            "column_type": "llm-text",
+            "completion_tokens_mean": 546.82,
+            "completion_tokens_median": 545.0,
+            "completion_tokens_stddev": 73.23,
+            "prompt_tokens_mean": 161.56,
+            "prompt_tokens_median": 161.0,
+            "prompt_tokens_stddev": 1.57
+        },
+        {
+            "column_name": "label",
+            "num_records": 24841,
+            "num_null": 0,
+            "num_unique": 1,
+            "pyarrow_dtype": "int64",
+            "simple_dtype": "int",
+            "column_type": "sampler",
+            "sampler_type": "uniform",
+            "distribution_type": "numerical",
+            "distribution": {
+                "min": 0,
+                "max": 0,
+                "mean": 0.0,
+                "stddev": 0.0,
+                "median": 0.0
+            }
+        }
+    ],
+    "side_effect_column_names": [
+        "student_victim"
+    ],
+    "column_profiles": null
+}

@@ -3,6 +3,7 @@ from decimal import Decimal
 from typing import Literal
 from pydantic import BaseModel, Field
 from pathlib import Path
+from typing import List
 
 
 from nemo_microservices.data_designer.essentials import (
@@ -56,7 +57,7 @@ model_configs = [
         inference_parameters=InferenceParameters(
             temperature=0.9,
             top_p=0.9,
-            max_tokens=512,
+            max_tokens=1024,
             max_parallel_requests=4,
             timeout=45.
         ),
@@ -75,6 +76,16 @@ config_builder.info.sampler_table
 # class Email(BaseModel):
 #     subject: str = Field(description="The Email's Subject to grap the student's attention")
 #     text: str = Field(description="Email text body showcasing the entire email")
+
+# class Event(BaseModel):
+#   event_title: str = Field(description= "Title of university event")
+#   location: str = Field(description="Where the even will be hosted, limited to areas within a University")
+#   date: str = Field(description="Date in the format of D/M/YYYY")
+#   time: str = Field(description="time of the event")
+#   description: str = Field(description="brief event description")
+
+  
+
 
 
 
@@ -104,9 +115,9 @@ config_builder.add_column(
             values=[
                 "Academics & Research",
                 "Campus Life & Events",
-                "Local Oportunities & Engagement",
+                "Local Opportunities & Engagement",
                 "Logistics & Operations",
-                "Health, Safety & Wellnes",
+                "Health, Safety & Wellness",
                 "Puerto Rico Specific",
                 "Featured Section",
             ],
@@ -116,10 +127,10 @@ config_builder.add_column(
 
 config_builder.add_column(
     SamplerColumnConfig(
-        name="activity",
+        name="Activity",
         sampler_type=SamplerType.SUBCATEGORY,
         params=SubcategorySamplerParams(
-            category="departments",
+            category="Activity_topics",
             values={
                 "Academics & Research": [
                     "Deadline Alerts",
@@ -166,61 +177,22 @@ config_builder.add_column(
 )
 
 
-# Sampler columns support conditional params, which are used if the condition is met.
-# In this example, we set the review style to rambling if the target age range is 18-25.
-# Note conditional parameters are only supported for Sampler column types.
-config_builder.add_column(
-    SamplerColumnConfig(
-        name="subject",
-        sampler_type=SamplerType.CATEGORY,
-        params=CategorySamplerParams(
-            values=["remote research opportunity", "research opportunity", "research assistant","administrative assistant", "Internship"],
-            weights=[2,1,2,1,1],
-        ),
-
-    )
-)
 
 # Optionally validate that the columns are configured correctly.
 config_builder.validate()
 
 
 #------------------Adding Samplers to generate data related to the customer and their review---------------
-config_builder.add_column(
-    SamplerColumnConfig(
-        name="weekly_pay",
-        sampler_type=SamplerType.CATEGORY,
-        params=CategorySamplerParams(
-            values=[250,275,300,315,350],
-            weights=[1, 2, 2, 1, 1]
-        ),
-    )
-)
 
-config_builder.validate()
 #------------------------------LLM GENERATED COLUMNS-----------------------------------
 # We can create new columns using Jinja expressions that reference
 # existing columns, including attributes of nested objects.
 config_builder.add_column(
-    ExpressionColumnConfig(
-        name="student_name", expr="{{ student_victim.first_name }} {{ student_victim.last_name }}"
-    )
-)
-config_builder.add_column(
-    ExpressionColumnConfig(
-        name="student_age", expr="{{ student_victim.age }}",
-        dtype="int",
-    )
-)
-config_builder.add_column(
     SamplerColumnConfig(
-        name="email_style",
-        sampler_type=SamplerType.CATEGORY,
-        params=CategorySamplerParams(
-            values=["Predatory", "Friendly", "Casual"],
-            weights=[2,1,1],
-        )
-
+        name="num_events",
+        sampler_type=SamplerType.UNIFORM,
+        params=UniformSamplerParams(low=4, high=7),
+        convert_to="int"  # Optional: converts to integer
     )
 )
 
@@ -229,15 +201,36 @@ config_builder.add_column(
 # config_builder.add_column(
 #     ExpressionColumnConfig(name="customer_age", expr="{{ customer.age }}")
 # )
+# config_builder.add_column(
+#     LLMStructuredColumnConfig(
+#         name="university_event",
+#         prompt=(
+#                 "Create a campus event based on '{{Activity}}' "
+#                 "Each event needs to have an event title, location, date/time, "
+#                 "and a short sentence for a description. "
+#                 "Each Event should be given in the following format: "
+#                 "event_title: Title of university event"
+#                 "location: Where the even will be hosted, limited to areas within the University of Puerto Rico"
+#                 "date: Date in the format of D/M/YYYY"
+#                 "time: time of the event"
+#                 "description: brief event description"
+#                 ),
+#         system_prompt=SYSTEM_PROMPT,
+#         output_format=Event,
+#         model_alias=MODEL_ALIAS,
+#     )
+# )
+
 
 
 config_builder.add_column(
     LLMTextColumnConfig(
         name="email_subject",
         prompt=(
-                "Create an email subject from '{{subject}}' category, offering a position relating " 
-                "to the university of Puerto Rico's '{{departments}}'. The subject should not be longer than 1 sentence. " 
-                "The subject should be direct and concise about the position offered."
+                "Write an email subject for a University Daily Digests(\"CARTERO\") "
+                "that looks to grab the attention of students from the University of Puerto Rico at Mayaguez "
+                "Highlight the main '{{Activity}}' "
+                "Keep it 1 sentence max. "
                 ),
         system_prompt=SYSTEM_PROMPT,
         model_alias=MODEL_ALIAS,
@@ -248,20 +241,14 @@ config_builder.add_column(
     LLMTextColumnConfig(
         name="body",
         prompt=(
-                "Create an email body text that offers a job position from the '{{subject}}' category, related to the University of Puerto Rico written in '{{email_style}}" 
-                "at Mayaguez '{{departments}}' department directed to the Students of said department. The email body text provides a description of the job position displayed in a list. "
-                "Keep the job description vague and short. " 
-                "The email body text should list the requirements needed for the job position. "
-                "The requirements must have a low barrier of entry for the students at said department. "
-                "The email should have the weekly pay listed being '{{weekly_pay}}'. "
-                "The email should be signed off with the name of the '{{department_staff}}' "
-                "The sign off should have the email of the professor '{{ department_staff.split()[1] | lower }}.{{ department_staff.split()[-1] | lower }}@upr.edu "  
-                "{% if student_age < 22 %}"
-                "Address the student directly by '{{student_name}}' "
-                "Change the requirements to say that there's no prior experience needed for the job "
-                "{% else %}"
-                "Address the student body of the '{{departments}}' as a whole. "
-                "{% endif %}"
+                "Write a University Daily digest email for the University of Puerto Rico at Mayaguez named CARTERO "
+                "Begin with the university name and a brief greeting. "
+                "Create a list of '{{num_events}}' relating to the topic of '{{Activity}}'"
+                "Each Event should have it's own individual event title, location, date, time, and a short sentence describint it."
+                "The Location should be limited to the campus for the University of Puerto Rico at Mayaguez."
+                "The Date should be varied all year long with the format of Day of Month,Month, Year"
+                "Keep the tone friendly, informative, and appropriate for a student audience. "
+                "End with a short \"About Cartero\" section explaining that the email is an automated digest of all campus events and a contact so that people can put up their own announcements."
                 ),
                 system_prompt=SYSTEM_PROMPT,
                 model_alias=MODEL_ALIAS,
@@ -273,36 +260,10 @@ config_builder.add_column(
     SamplerColumnConfig(
         name="label",
         sampler_type=SamplerType.UNIFORM,
-        params=UniformSamplerParams(low=1, high=1),
+        params=UniformSamplerParams(low=0, high=0),
         convert_to="int"  # Optional: converts to integer
     )
 )
-
-# config_builder.add_column(
-#     LLMStructuredColumnConfig(
-#         name="email_content",
-#         prompt=(
-#             "Create an Email offering a job position based on '{{subject}}' written in '{{email_style}}' addressed to the students of '{{departments}}' " 
-#             "with the following format: "
-#             "subject: Email subject related to the job position following the same style. 1 sentence max."
-#             "Body: The email body should provide a description of the job position displayed in a list. "
-#             "Keep the job description vague and short, followed by the job requirements. "
-#             "The requirements must have a low barrier of entry for the students of said department. "
-#             "Have the weekly pay listed being '{{weekly_pay}}'. "
-#             "The email should be signed off with the name of the '{{department_staff}}' "
-#             "The sign off should have the email of the professor '{{ department_staff.split()[1] | lower }}.{{ department_staff.split()[-1] | lower }}@upr.edu "  
-#             "{% if student_age < 22 %}"
-#             "Address the student directly by '{{student_name}}' "
-#             "Change the requirements to say that there's no prior experience needed for the job "
-#             "{% else %}"
-#             "Address the student body of the '{{departments}}' as a whole. "
-#             "{% endif %}"
-#         ),
-#         system_prompt=SYSTEM_PROMPT,
-#         output_format=Email,
-#         model_alias=MODEL_ALIAS,
-#     )
-# )
 
 
 config_builder.validate()
@@ -356,5 +317,5 @@ OUTPUT_PATH = "GenDatasets"
 # Download the job artifacts and save them to disk.
 job_results.download_artifacts(
     output_path=OUTPUT_PATH,
-    artifacts_folder_name="Phishing_Emails_test1",
+    artifacts_folder_name="Phishing_Emails_test2",
 );
