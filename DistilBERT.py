@@ -328,14 +328,14 @@ if __name__ == "__main__":
     evaluate_model()
     
 
-    # measure_model_complexity()
+    measure_model_complexity()
 
 
-    # pipe = pipeline("text-classification",
-    #                model="./bert-phishing-final",
-    #                tokenizer="./bert-phishing-final",)
-    # result = pipe("Helllo! we are excited to offer you a free iPhone! Click the link below to claim your prize.")
-    # print(f"Prediction result: {result}")
+    pipe = pipeline("text-classification",
+                   model="./bert-phishing-final",
+                   tokenizer="./bert-phishing-final",)
+    result = pipe("Helllo! we are excited to offer you a free iPhone! Click the link below to claim your prize.")
+    print(f"Prediction result: {result}")
 
 # Optional: function to clean HTML
 def clean_html(raw_html):
