@@ -11,3 +11,14 @@
 !Nemo//*
 !GenDatasets
 !GenDatasets//*
+
+# Website Files
+!DocWebsite
+!DocWebsite/**/*
+!about.html
+!contact.html
+!demos.html
+!gallery.html
+!index.html
+!style.css
+!team.html
