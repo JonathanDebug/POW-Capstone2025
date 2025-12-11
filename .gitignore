@@ -2,16 +2,23 @@
 *
 # But track this file
 !DistilBERT.py
-!.gitignore
-!Extension
-!server.py
-!requirements.txt
 !pyproject.toml
 !README.md
 !.gitignore
 
 # Track the Nemo directory and its contents
 !Nemo
-!Nemo/**/*
+!Nemo//*
 !GenDatasets
-!GenDatasets/**/*
+!GenDatasets//*
+
+# Website Files
+!DocWebsite
+!DocWebsite/**/*
+!about.html
+!contact.html
+!demos.html
+!gallery.html
+!index.html
+!style.css
+!team.html

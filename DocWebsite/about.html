@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About POW</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+
+    <header class="header">
+        <div class="container">
+            <nav class="nav">
+                <a href="index.html" class="logo">POW</a>
+                <ul class="nav-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html" class="active">About POW</a></li>
+                    <li><a href="demos.html">Demos</a></li>
+                    <li><a href="team.html">Meet the Team</a></li>
+                    <li><a href="gallery.html">Gallery</a>
+                    <li><a href="contact.html">Contact Us</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    
+<body class="has-waves">
+    <div class="base-wave-bg" id="baseWaveBg">
+        <div class="wave-layer"></div>
+        <div class="wave-layer"></div>
+        <div class="wave-layer"></div>
+    </div>
+
+    <h1 class="bg-title">Welcome to Phish Outta Water</p1> 
+    <div class="fish-swimmer">
+        <div class="fish-body">
+            <div class="triangle-1 triangle-top"></div>
+            <div class="triangle-2 triangle-left"></div>
+            <div class="triangle-3 triangle-right"></div>
+            <div class="triangle-4 triangle-bottom"></div>
+            <div class="triangle-5 tail-left"></div>
+            <div class="triangle-6 tail-right"></div>
+            <div class="fish-eye"></div>
+        </div>
+    </div>
+
+    <div class="fish-swimmer">
+        <div class="fish-body">
+            <div class="triangle-1 triangle-top"></div>
+            <div class="triangle-2 triangle-left"></div>
+            <div class="triangle-3 triangle-right"></div>
+            <div class="triangle-4 triangle-bottom"></div>
+            <div class="triangle-5 tail-left"></div>
+            <div class="triangle-6 tail-right"></div>
+            <div class="fish-eye"></div>
+        </div>
+    </div>
+
+    <div class="fish-swimmer">
+        <div class="fish-body">
+            <div class="triangle-1 triangle-top"></div>
+            <div class="triangle-2 triangle-left"></div>
+            <div class="triangle-3 triangle-right"></div>
+            <div class="triangle-4 triangle-bottom"></div>
+            <div class="triangle-5 tail-left"></div>
+            <div class="triangle-6 tail-right"></div>
+            <div class="fish-eye"></div>
+        </div>
+    </div>
+
+    <div class="fish-swimmer">
+        <div class="fish-body">
+            <div class="triangle-1 triangle-top"></div>
+            <div class="triangle-2 triangle-left"></div>
+            <div class="triangle-3 triangle-right"></div>
+            <div class="triangle-4 triangle-bottom"></div>
+            <div class="triangle-5 tail-left"></div>
+            <div class="triangle-6 tail-right"></div>
+            <div class="fish-eye"></div>
+        </div>
+    </div>
+
+
+    <main class="main-content">
+        <div class="container">
+            <div class="content-box">
+
+                <h2>What is POW?</h2>
+                <p>Phish Outta Water is a web extension created to identify phishing e-mails solely on outlook. It was created for the UPRM Capstone of 2025.</p>
+                <h2>How does it work?</h2>
+                <p>POW's extension has a button that the user can click to begin the scan. We take user's security and privacy seriously, so POW will not scan unless prompted. If the user tries to scan anywhere outside Outlook, it will receive an error message and a button to redirect them to Outlook website will appear. </p>
+                
+                <h2>Technologies</h2>
+              <p>POW utilizes DistilBERT, a ML tool used to classify the emails into phishing or non phishing emails. POW prouds itself with a 99% Accuracy.</p>
+               <h2>Data Sets</h2>
+                <p>POW utilized an 80/20 methods for training. 69,000 emails were supplied by kaggle. This Data Set was utilized to supplement the lack of emails from UPRMs Data Base. While we contacted CTI, unfortunately we were unable to attain these emails. </p>
+                <h2>Scalability</h2>
+                <p> Currently, POW was made for the University Of Puerto Rico, however, it is in our future plans to expand to other institutions with some tweaks for adaptability to their own systems. </p>
+                 <h2>Legal Disclaimer</h2>
+                <p>All intellectual properties have been made solely for institutional use and educational purposes. </p>
+                <h2>Github Repository</h2>
+                <p> <a href="https://github.com/JonathanDebug/POW-Capstone2025"> https://github.com/JonathanDebug/POW-Capstone2025 </a></p>
+              
+
+            </div>
+        </div>
+    </main>
+
+ 
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const baseWaveBg = document.getElementById('baseWaveBg');
+            
+            if (baseWaveBg) {
+                for (let i = 0; i < 25; i++) {
+                    const dot = document.createElement('div');
+                    dot.className = 'bg-dot';
+                    
+                    const size = Math.random() * 40 + 10;
+                    const left = Math.random() * 100;
+                    const delay = Math.random() * 30;
+                    const duration = 30 + Math.random() * 40;
+                    
+                    dot.style.cssText = `
+                        width: ${size}px;
+                        height: ${size}px;
+                        left: ${left}%;
+                        top: 100%;
+                        animation-delay: ${delay}s;
+                        animation-duration: ${duration}s;
+                        opacity: ${0.15 + Math.random() * 0.15};
+                    `;
+                    
+                    baseWaveBg.appendChild(dot);
+                }
+                
+                function createFishBubbles() {
+                    setInterval(() => {
+                        const bubble = document.createElement('div');
+                        bubble.className = 'fish-bubble';
+                        
+                        const size = Math.random() * 8 + 4;
+                        const left = Math.random() * 100;
+                        const delay = Math.random() * 2;
+                        
+                        bubble.style.cssText = `
+                            width: ${size}px;
+                            height: ${size}px;
+                            left: ${left}%;
+                            bottom: 180px;
+                            animation-delay: ${delay}s;
+                        `;
+                        
+                        baseWaveBg.appendChild(bubble);
+                        
+                        setTimeout(() => {
+                            if (bubble.parentNode) bubble.remove();
+                        }, 3000);
+                    }, 500);
+                }
+                
+                setTimeout(createFishBubbles, 1000);
+            }
+        });
+    </script>
+</body>
+</html>

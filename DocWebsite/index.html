@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+
+
+    <header class="header">
+        <div class="container">
+            <nav class="nav">
+                <a href="index.html" class="logo">POW</a>
+                <ul class="nav-links">
+                    <li><a href="index.html"class="active">Home</a></li>
+                    <li><a href="about.html" >About POW</a></li>
+                    <li><a href="demos.html">Demos</a></li>
+                    <li><a href="team.html">Meet the Team</a></li>
+                    <li><a href="gallery.html">Gallery</a>
+                    <li><a href="contact.html">Contact Us</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <div class="container">
+            <div class="content-box" style="text-align: center; max-width: 600px; margin: 0 auto;">
+                <h1 style="font-size: 42px; margin-bottom: 10px;">Welcome to POW!</h1>
+                
+                <div style="margin: 30px 0;">
+                    <img src=https://cdn.discordapp.com/attachments/1393076344048582750/1448020980177043626/Screenshot_2025-12-09_at_14-38-01_POW_Extension_-_Logotipos.png?ex=6939be20&is=69386ca0&hm=ffdce6c19960402496f64d2992fc2f074aeef1b4fa9a32ecf3297fdf6da551c2 style="max-width: 300px; height: auto;">
+                   
+                </div>
+                
+                <p style="font-size: 18px; color: #1e88e5; margin-top: 20px;">
+                    Don't give your personal information away! Let POW help you identify phishing attempts and keep your data safe.
+                </p>
+                
+            </div>
+        </div>
+    </main>
+
+
+    <body class="has-waves">
+    <div class="base-wave-bg" id="baseWaveBg">
+        <div class="wave-layer"></div>
+        <div class="wave-layer"></div>
+        <div class="wave-layer"></div>
+    </div>
+
+    <div class="fish-swimmer">
+        <div class="fish-body">
+            <div class="triangle-1 triangle-top"></div>
+            <div class="triangle-2 triangle-left"></div>
+            <div class="triangle-3 triangle-right"></div>
+            <div class="triangle-4 triangle-bottom"></div>
+            <div class="triangle-5 tail-left"></div>
+            <div class="triangle-6 tail-right"></div>
+            <div class="fish-eye"></div>
+        </div>
+    </div>
+
+    <div class="fish-swimmer">
+        <div class="fish-body">
+            <div class="triangle-1 triangle-top"></div>
+            <div class="triangle-2 triangle-left"></div>
+            <div class="triangle-3 triangle-right"></div>
+            <div class="triangle-4 triangle-bottom"></div>
+            <div class="triangle-5 tail-left"></div>
+            <div class="triangle-6 tail-right"></div>
+            <div class="fish-eye"></div>
+        </div>
+    </div>
+
+    <div class="fish-swimmer">
+        <div class="fish-body">
+            <div class="triangle-1 triangle-top"></div>
+            <div class="triangle-2 triangle-left"></div>
+            <div class="triangle-3 triangle-right"></div>
+            <div class="triangle-4 triangle-bottom"></div>
+            <div class="triangle-5 tail-left"></div>
+            <div class="triangle-6 tail-right"></div>
+            <div class="fish-eye"></div>
+        </div>
+    </div>
+
+    <div class="fish-swimmer">
+        <div class="fish-body">
+            <div class="triangle-1 triangle-top"></div>
+            <div class="triangle-2 triangle-left"></div>
+            <div class="triangle-3 triangle-right"></div>
+            <div class="triangle-4 triangle-bottom"></div>
+            <div class="triangle-5 tail-left"></div>
+            <div class="triangle-6 tail-right"></div>
+            <div class="fish-eye"></div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const baseWaveBg = document.getElementById('baseWaveBg');
+            
+            if (baseWaveBg) {
+                for (let i = 0; i < 15; i++) {
+                    const dot = document.createElement('div');
+                    dot.className = 'bg-dot';
+                    
+                    const size = Math.random() * 30 + 10;
+                    const left = Math.random() * 100;
+                    const delay = Math.random() * 20;
+                    const duration = 20 + Math.random() * 30;
+                    
+                    dot.style.cssText = `
+                        width: ${size}px;
+                        height: ${size}px;
+                        left: ${left}%;
+                        top: 100%;
+                        animation-delay: ${delay}s;
+                        animation-duration: ${duration}s;
+                        opacity: ${0.1 + Math.random() * 0.1};
+                    `;
+                    
+                    baseWaveBg.appendChild(dot);
+                }
+                
+                function createFishBubbles() {
+                    setInterval(() => {
+                        const bubble = document.createElement('div');
+                        bubble.className = 'fish-bubble';
+                        
+                        const size = Math.random() * 8 + 4;
+                        const left = Math.random() * 100;
+                        const delay = Math.random() * 2;
+                        
+                        bubble.style.cssText = `
+                            width: ${size}px;
+                            height: ${size}px;
+                            left: ${left}%;
+                            bottom: 350px; /* Start above the waves */
+                            animation-delay: ${delay}s;
+                        `;
+                        
+                        baseWaveBg.appendChild(bubble);
+                        
+                        setTimeout(() => {
+                            if (bubble.parentNode) bubble.remove();
+                        }, 3000);
+                    }, 500);
+                }
+                
+                setTimeout(createFishBubbles, 1000);
+            }
+        });
+    </script>
+</body>
+</html>
