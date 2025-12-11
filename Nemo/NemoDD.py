@@ -238,24 +238,34 @@ config_builder.add_column(
     )
 )
 
+# config_builder.add_column(
+#     LLMTextColumnConfig(
+#         name="body",
+#         prompt=(
+#                 "Create an email body text that offers a job position from the '{{subject}}' category, related to the University of Puerto Rico written in a '{{email_style}}' style" 
+#                 "at Mayaguez '{{departments}}' department directed to the Students of said department. The email body text provides a description of the job position displayed in a list. "
+#                 "Keep the job description vague and short. " 
+#                 "The email body text should list the requirements needed for the job position. "
+#                 "The requirements must have a low barrier of entry for the students at said department. "
+#                 "The email should have the weekly pay listed being '{{weekly_pay}}'. "
+#                 "The email should be signed off with the name of the '{{department_staff}}' "
+#                 "The sign off should have the email of the professor '{{ department_staff.split()[1] | lower }}.{{ department_staff.split()[-1] | lower }}@upr.edu "  
+#                 "{% if student_age < 22 %}"
+#                 "Address the student directly by '{{student_name}}' "
+#                 "Change the requirements to say that there's no prior experience needed for the job "
+#                 "{% else %}"
+#                 "Address the student body of the '{{departments}}' as a whole. "
+#                 "{% endif %}"
+#                 ),
+#                 system_prompt=SYSTEM_PROMPT,
+#                 model_alias=MODEL_ALIAS,
+#     )
+# )
 config_builder.add_column(
     LLMTextColumnConfig(
         name="body",
         prompt=(
-                "Create an email body text that offers a job position from the '{{subject}}' category, related to the University of Puerto Rico written in '{{email_style}}" 
-                "at Mayaguez '{{departments}}' department directed to the Students of said department. The email body text provides a description of the job position displayed in a list. "
-                "Keep the job description vague and short. " 
-                "The email body text should list the requirements needed for the job position. "
-                "The requirements must have a low barrier of entry for the students at said department. "
-                "The email should have the weekly pay listed being '{{weekly_pay}}'. "
-                "The email should be signed off with the name of the '{{department_staff}}' "
-                "The sign off should have the email of the professor '{{ department_staff.split()[1] | lower }}.{{ department_staff.split()[-1] | lower }}@upr.edu "  
-                "{% if student_age < 22 %}"
-                "Address the student directly by '{{student_name}}' "
-                "Change the requirements to say that there's no prior experience needed for the job "
-                "{% else %}"
-                "Address the student body of the '{{departments}}' as a whole. "
-                "{% endif %}"
+                "You are '{{department_staff}}'"
                 ),
                 system_prompt=SYSTEM_PROMPT,
                 model_alias=MODEL_ALIAS,
@@ -307,25 +317,25 @@ config_builder.validate()
 #--------------------Testing for preview of a sample record----------------
 
 
-# preview = data_designer_client.preview(config_builder)
+preview = data_designer_client.preview(config_builder)
 
 
 
-# # Run this cell multiple times to cycle through the 10 preview records.
-# for i in range(0,10):
-#     preview.display_sample_record()
+# Run this cell multiple times to cycle through the 10 preview records.
+for i in range(0,10):
+    preview.display_sample_record()
 
-# # The preview dataset is available as a pandas DataFrame.
-# # TO VIEW THE DATA FRAME, RUN THIS IN DEBUGGER AND USE THE DATA WRANGLER EXTENSION IN VSC
+# The preview dataset is available as a pandas DataFrame.
+# TO VIEW THE DATA FRAME, RUN THIS IN DEBUGGER AND USE THE DATA WRANGLER EXTENSION IN VSC
 
-# preview.dataset
+preview.dataset
 
-# # Print the analysis as a table.
-# preview.analysis.to_report()
+# Print the analysis as a table.
+preview.analysis.to_report()
 
 
 #------------------------------------FINALLY CREATE THE DATASET-----------------------------------
-job_results = data_designer_client.create(config_builder, num_records=25000)
+job_results = data_designer_client.create(config_builder, num_records=20)
 
 # This will block until the job is complete.
 job_results.wait_until_done()
@@ -350,5 +360,5 @@ OUTPUT_PATH = "GenDatasets"
 # Download the job artifacts and save them to disk.
 job_results.download_artifacts(
     output_path=OUTPUT_PATH,
-    artifacts_folder_name="Phishing_Emails_test1",
+    artifacts_folder_name="Phishing_Emails_test3",
 );

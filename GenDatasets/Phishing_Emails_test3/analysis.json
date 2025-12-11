@@ -1,0 +1,249 @@
+{
+    "num_records": 20,
+    "target_num_records": 20,
+    "column_statistics": [
+        {
+            "column_name": "departments",
+            "num_records": 20,
+            "num_null": 0,
+            "num_unique": 5,
+            "pyarrow_dtype": "string",
+            "simple_dtype": "string",
+            "column_type": "sampler",
+            "sampler_type": "category",
+            "distribution_type": "categorical",
+            "distribution": {
+                "most_common_value": "Mechanical Engineering",
+                "least_common_value": "Chemical Engineering",
+                "histogram": {
+                    "categories": [
+                        "Mechanical Engineering",
+                        "Computer Science and Engineering",
+                        "Electrical and Computer Engineering",
+                        "Industrial Engineering",
+                        "Chemical Engineering"
+                    ],
+                    "counts": [
+                        8,
+                        4,
+                        3,
+                        3,
+                        2
+                    ]
+                }
+            }
+        },
+        {
+            "column_name": "department_staff",
+            "num_records": 20,
+            "num_null": 0,
+            "num_unique": 16,
+            "pyarrow_dtype": "string",
+            "simple_dtype": "string",
+            "column_type": "sampler",
+            "sampler_type": "subcategory",
+            "distribution_type": "categorical",
+            "distribution": {
+                "most_common_value": "Dr. Sierra David",
+                "least_common_value": "Dr. David Barrio Gonzales",
+                "histogram": {
+                    "categories": [
+                        "Dr. Sierra David",
+                        "Dr. Brand Coolriel",
+                        "Dr. David Doomer",
+                        "Dr. Juan Patrollo",
+                        "Dr. William Tercero Gallina",
+                        "Dr. Easydoro Rey",
+                        "Dr. Agosto Rulla Toro",
+                        "Dr. Yoma Torres",
+                        "Dr. Hector Carlos Carlos",
+                        "Dr. Pedro Pedro",
+                        "Dr. Edward Otto",
+                        "Dr. Arturo Rey",
+                        "Dr. Gather Shun",
+                        "Dr. Mark Shoots",
+                        "Dr. Ludwig Jose",
+                        "Dr. David Barrio Gonzales"
+                    ],
+                    "counts": [
+                        2,
+                        2,
+                        2,
+                        2,
+                        1,
+                        1,
+                        1,
+                        1,
+                        1,
+                        1,
+                        1,
+                        1,
+                        1,
+                        1,
+                        1,
+                        1
+                    ]
+                }
+            }
+        },
+        {
+            "column_name": "subject",
+            "num_records": 20,
+            "num_null": 0,
+            "num_unique": 5,
+            "pyarrow_dtype": "string",
+            "simple_dtype": "string",
+            "column_type": "sampler",
+            "sampler_type": "category",
+            "distribution_type": "categorical",
+            "distribution": {
+                "most_common_value": "research opportunity",
+                "least_common_value": "administrative assistant",
+                "histogram": {
+                    "categories": [
+                        "research opportunity",
+                        "Internship",
+                        "remote research opportunity",
+                        "research assistant",
+                        "administrative assistant"
+                    ],
+                    "counts": [
+                        6,
+                        5,
+                        4,
+                        4,
+                        1
+                    ]
+                }
+            }
+        },
+        {
+            "column_name": "weekly_pay",
+            "num_records": 20,
+            "num_null": 0,
+            "num_unique": 5,
+            "pyarrow_dtype": "int64",
+            "simple_dtype": "int",
+            "column_type": "sampler",
+            "sampler_type": "category",
+            "distribution_type": "categorical",
+            "distribution": {
+                "most_common_value": 300,
+                "least_common_value": 315,
+                "histogram": {
+                    "categories": [
+                        300,
+                        350,
+                        250,
+                        275,
+                        315
+                    ],
+                    "counts": [
+                        6,
+                        5,
+                        4,
+                        4,
+                        1
+                    ]
+                }
+            }
+        },
+        {
+            "column_name": "student_name",
+            "num_records": 20,
+            "num_null": 0,
+            "num_unique": 20,
+            "pyarrow_dtype": "string",
+            "simple_dtype": "string",
+            "column_type": "expression"
+        },
+        {
+            "column_name": "student_age",
+            "num_records": 20,
+            "num_null": 0,
+            "num_unique": 10,
+            "pyarrow_dtype": "int64",
+            "simple_dtype": "int",
+            "column_type": "expression"
+        },
+        {
+            "column_name": "email_style",
+            "num_records": 20,
+            "num_null": 0,
+            "num_unique": 3,
+            "pyarrow_dtype": "string",
+            "simple_dtype": "string",
+            "column_type": "sampler",
+            "sampler_type": "category",
+            "distribution_type": "categorical",
+            "distribution": {
+                "most_common_value": "Predatory",
+                "least_common_value": "Friendly",
+                "histogram": {
+                    "categories": [
+                        "Predatory",
+                        "Casual",
+                        "Friendly"
+                    ],
+                    "counts": [
+                        10,
+                        5,
+                        5
+                    ]
+                }
+            }
+        },
+        {
+            "column_name": "email_subject",
+            "num_records": 20,
+            "num_null": 0,
+            "num_unique": 18,
+            "pyarrow_dtype": "string",
+            "simple_dtype": "string",
+            "column_type": "llm-text",
+            "completion_tokens_mean": 12.1,
+            "completion_tokens_median": 11.5,
+            "completion_tokens_stddev": 1.62,
+            "prompt_tokens_mean": 54.6,
+            "prompt_tokens_median": 54.0,
+            "prompt_tokens_stddev": 1.02
+        },
+        {
+            "column_name": "body",
+            "num_records": 20,
+            "num_null": 0,
+            "num_unique": 20,
+            "pyarrow_dtype": "string",
+            "simple_dtype": "string",
+            "column_type": "llm-text",
+            "completion_tokens_mean": 154.95,
+            "completion_tokens_median": 157.5,
+            "completion_tokens_stddev": 21.68,
+            "prompt_tokens_mean": 168.4,
+            "prompt_tokens_median": 166.0,
+            "prompt_tokens_stddev": 4.31
+        },
+        {
+            "column_name": "label",
+            "num_records": 20,
+            "num_null": 0,
+            "num_unique": 1,
+            "pyarrow_dtype": "int64",
+            "simple_dtype": "int",
+            "column_type": "sampler",
+            "sampler_type": "uniform",
+            "distribution_type": "numerical",
+            "distribution": {
+                "min": 1,
+                "max": 1,
+                "mean": 1.0,
+                "stddev": 0.0,
+                "median": 1.0
+            }
+        }
+    ],
+    "side_effect_column_names": [
+        "student_victim"
+    ],
+    "column_profiles": null
+}

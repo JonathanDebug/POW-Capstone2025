@@ -396,9 +396,9 @@ def evaluate_synth_model():
 if __name__ == "__main__":
     check_cuda()
     
-    df = load_data()
-    train_model(df)
-    evaluate_model()
+    # df = load_data()
+    # train_model(df)
+    evaluate_synth_model()
     
 
     # measure_model_complexity()
