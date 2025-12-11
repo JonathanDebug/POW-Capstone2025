@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Showcase</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="has-waves">
+    <div class="base-wave-bg" id="baseWaveBg">
+        <div class="wave-layer"></div>
+        <div class="wave-layer"></div>
+        <div class="wave-layer"></div>
+    </div>
+
+    <div class="fish-swimmer">
+        <div class="fish-body">
+            <div class="triangle-1 triangle-top"></div>
+            <div class="triangle-2 triangle-left"></div>
+            <div class="triangle-3 triangle-right"></div>
+            <div class="triangle-4 triangle-bottom"></div>
+            <div class="triangle-5 tail-left"></div>
+            <div class="triangle-6 tail-right"></div>
+            <div class="fish-eye"></div>
+        </div>
+    </div>
+
+    <div class="fish-swimmer">
+        <div class="fish-body">
+            <div class="triangle-1 triangle-top"></div>
+            <div class="triangle-2 triangle-left"></div>
+            <div class="triangle-3 triangle-right"></div>
+            <div class="triangle-4 triangle-bottom"></div>
+            <div class="triangle-5 tail-left"></div>
+            <div class="triangle-6 tail-right"></div>
+            <div class="fish-eye"></div>
+        </div>
+    </div>
+
+    <div class="fish-swimmer">
+        <div class="fish-body">
+            <div class="triangle-1 triangle-top"></div>
+            <div class="triangle-2 triangle-left"></div>
+            <div class="triangle-3 triangle-right"></div>
+            <div class="triangle-4 triangle-bottom"></div>
+            <div class="triangle-5 tail-left"></div>
+            <div class="triangle-6 tail-right"></div>
+            <div class="fish-eye"></div>
+        </div>
+    </div>
+
+    <div class="fish-swimmer">
+        <div class="fish-body">
+            <div class="triangle-1 triangle-top"></div>
+            <div class="triangle-2 triangle-left"></div>
+            <div class="triangle-3 triangle-right"></div>
+            <div class="triangle-4 triangle-bottom"></div>
+            <div class="triangle-5 tail-left"></div>
+            <div class="triangle-6 tail-right"></div>
+            <div class="fish-eye"></div>
+        </div>
+    </div>
+
+ 
+
+    <header class="header">
+        <div class="container">
+            <nav class="nav">
+                <a href="index.html" class="logo">POW</a>
+                <ul class="nav-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html" >About POW</a></li>
+                    <li><a href="demos.html"class="active">Demo</a></li>
+                    <li><a href="team.html">Meet the Team</a></li>
+                    <li><a href="gallery.html">Gallery</a>
+                    <li><a href="contact.html">Contact Us</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+   
+    <main class="main-content">
+        <div class="container">
+            <div class="content-box">
+                <h1 style><i class="fas fa-play-circle"></i> Project Showcase</h1>
+                <div class="video-showcase">
+                    <div class="video-slideshow" id="videoSlideshow">
+                        <div class="video-slide active" id="slide1">
+                            <div class="video-container">
+                                <iframe 
+                                    width="100%" 
+                                    height="100%" 
+                                    src="https://www.youtube.com/embed/O89oAmA6UfU?si=ljFV050tf4kTGGp5" 
+                                    frameborder="0" 
+                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                    allowfullscreen>
+                                </iframe>
+                            </div>
+                
+                <h1 style="text-align: center; margin-top: 5rem; color: #2c3e50;">  </h3>
+            
+                
+                
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const baseWaveBg = document.getElementById('baseWaveBg');
+            
+            if (baseWaveBg) {
+                for (let i = 0; i < 25; i++) {
+                    const dot = document.createElement('div');
+                    dot.className = 'bg-dot';
+                    
+                    const size = Math.random() * 40 + 10;
+                    const left = Math.random() * 100;
+                    const delay = Math.random() * 30;
+                    const duration = 30 + Math.random() * 40;
+                    
+                    dot.style.cssText = `
+                        width: ${size}px;
+                        height: ${size}px;
+                        left: ${left}%;
+                        top: 100%;
+                        animation-delay: ${delay}s;
+                        animation-duration: ${duration}s;
+                        opacity: ${0.15 + Math.random() * 0.15};
+                    `;
+                    
+                    baseWaveBg.appendChild(dot);
+                }
+                
+                function createFishBubbles() {
+                    setInterval(() => {
+                        const bubble = document.createElement('div');
+                        bubble.className = 'fish-bubble';
+                        
+                        const size = Math.random() * 8 + 4;
+                        const left = Math.random() * 100;
+                        const delay = Math.random() * 2;
+                        
+                        bubble.style.cssText = `
+                            width: ${size}px;
+                            height: ${size}px;
+                            left: ${left}%;
+                            bottom: 180px;
+                            animation-delay: ${delay}s;
+                        `;
+                        
+                        baseWaveBg.appendChild(bubble);
+                        
+                        setTimeout(() => {
+                            if (bubble.parentNode) bubble.remove();
+                        }, 3000);
+                    }, 500);
+                }
+                
+                setTimeout(createFishBubbles, 1000);
+            }
+           
+        });
+    </script>
+</body>
+</html>

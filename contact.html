@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us!</title>
+    <link rel="stylesheet" href="style.css">
+           
+   
+</head>
+<body>
+   <header class="header">
+        <div class="container">
+            <nav class="nav">
+                <a href="index.html" class="logo">POW</a>
+                <ul class="nav-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html" >About POW</a></li>
+                    <li><a href="demos.html">Showcase</a></li>
+                    <li><a href="team.html">Meet the Team</a></li>
+                    <li><a href="gallery.html">Gallery</a>
+                    <li><a href="contact.html"class="active">Contact Us</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+   <div class="has-waves">
+        <div class="base-wave-bg" id="baseWaveBg">
+            <div class="wave-layer"></div>
+            <div class="wave-layer"></div>
+            <div class="wave-layer"></div>
+        </div>
+
+        <h1 class="bg-title">Contact Us!</h1>
+        
+        <div class="envelope-container">
+            <img src="https://cdn3.iconfinder.com/data/icons/email-21/512/Email_Open-512.png" 
+                 alt="Contact Envelope" 
+                 class="envelope-image">
+            
+            <div class="envelope-content">
+                <div style="height: 35%; width: 120%; padding-bottom: 10px;">
+                    <h2 class="envelope-title">Get In Touch</h2>
+                    <p class="envelope-text">Extra questions? </br> Send us a message. </br></p>
+                </div>
+                
+                
+                
+                <div style="height: 34%; width: 100%; padding-top: 10px;">
+                    <p class="envelope-text"></br></br></br></br></p>
+                    <div class="contact-info">
+                       <a href="mailto:pow.extension@outlook.com">pow.extension@outlook.com</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+       
+        <div class="fish-swimmer">
+            <div class="fish-body">
+                <div class="triangle-1 triangle-top"></div>
+                <div class="triangle-2 triangle-left"></div>
+                <div class="triangle-3 triangle-right"></div>
+                <div class="triangle-4 triangle-bottom"></div>
+                <div class="triangle-5 tail-left"></div>
+                <div class="triangle-6 tail-right"></div>
+                <div class="fish-eye"></div>
+            </div>
+        </div>
+
+        <div class="fish-swimmer">
+            <div class="fish-body">
+                <div class="triangle-1 triangle-top"></div>
+                <div class="triangle-2 triangle-left"></div>
+                <div class="triangle-3 triangle-right"></div>
+                <div class="triangle-4 triangle-bottom"></div>
+                <div class="triangle-5 tail-left"></div>
+                <div class="triangle-6 tail-right"></div>
+                <div class="fish-eye"></div>
+            </div>
+        </div>
+
+        <div class="fish-swimmer">
+            <div class="fish-body">
+                <div class="triangle-1 triangle-top"></div>
+                <div class="triangle-2 triangle-left"></div>
+                <div class="triangle-3 triangle-right"></div>
+                <div class="triangle-4 triangle-bottom"></div>
+                <div class="triangle-5 tail-left"></div>
+                <div class="triangle-6 tail-right"></div>
+                <div class="fish-eye"></div>
+            </div>
+        </div>
+
+        <div class="fish-swimmer">
+            <div class="fish-body">
+                <div class="triangle-1 triangle-top"></div>
+                <div class="triangle-2 triangle-left"></div>
+                <div class="triangle-3 triangle-right"></div>
+                <div class="triangle-4 triangle-bottom"></div>
+                <div class="triangle-5 tail-left"></div>
+                <div class="triangle-6 tail-right"></div>
+                <div class="fish-eye"></div>
+            </div>
+        </div>
+    </div>
+
+     <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const baseWaveBg = document.getElementById('baseWaveBg');
+            
+            if (baseWaveBg) {
+                for (let i = 0; i < 15; i++) {
+                    const dot = document.createElement('div');
+                    dot.className = 'bg-dot';
+                    
+                    const size = Math.random() * 30 + 10;
+                    const left = Math.random() * 100;
+                    const delay = Math.random() * 20;
+                    const duration = 20 + Math.random() * 30;
+                    
+                    dot.style.cssText = `
+                        width: ${size}px;
+                        height: ${size}px;
+                        left: ${left}%;
+                        top: 100%;
+                        animation-delay: ${delay}s;
+                        animation-duration: ${duration}s;
+                        opacity: ${0.1 + Math.random() * 0.1};
+                    `;
+                    
+                    baseWaveBg.appendChild(dot);
+                }
+                
+                function createFishBubbles() {
+                    setInterval(() => {
+                        const bubble = document.createElement('div');
+                        bubble.className = 'fish-bubble';
+                        
+                        const size = Math.random() * 8 + 4;
+                        const left = Math.random() * 100;
+                        const delay = Math.random() * 2;
+                        
+                        bubble.style.cssText = `
+                            width: ${size}px;
+                            height: ${size}px;
+                            left: ${left}%;
+                            bottom: 350px; /* Start above the waves */
+                            animation-delay: ${delay}s;
+                        `;
+                        
+                        baseWaveBg.appendChild(bubble);
+                        
+                        setTimeout(() => {
+                            if (bubble.parentNode) bubble.remove();
+                        }, 3000);
+                    }, 500);
+                }
+                
+                setTimeout(createFishBubbles, 1000);
+            }
+        });
+    </script>
+</body>
+</html>
