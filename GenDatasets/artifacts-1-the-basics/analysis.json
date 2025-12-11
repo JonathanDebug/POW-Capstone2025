@@ -1,0 +1,224 @@
+{
+    "num_records": 100,
+    "target_num_records": 100,
+    "column_statistics": [
+        {
+            "column_name": "product_category",
+            "num_records": 100,
+            "num_null": 0,
+            "num_unique": 5,
+            "pyarrow_dtype": "string",
+            "simple_dtype": "string",
+            "column_type": "sampler",
+            "sampler_type": "category",
+            "distribution_type": "categorical",
+            "distribution": {
+                "most_common_value": "Electronics",
+                "least_common_value": "Home Office",
+                "histogram": {
+                    "categories": [
+                        "Electronics",
+                        "Clothing",
+                        "Books",
+                        "Home & Kitchen",
+                        "Home Office"
+                    ],
+                    "counts": [
+                        23,
+                        23,
+                        22,
+                        20,
+                        12
+                    ]
+                }
+            }
+        },
+        {
+            "column_name": "product_subcategory",
+            "num_records": 100,
+            "num_null": 0,
+            "num_unique": 22,
+            "pyarrow_dtype": "string",
+            "simple_dtype": "string",
+            "column_type": "sampler",
+            "sampler_type": "subcategory",
+            "distribution_type": "categorical",
+            "distribution": {
+                "most_common_value": "Accessories",
+                "least_common_value": "Headphones",
+                "histogram": {
+                    "categories": [
+                        "Accessories",
+                        "Non-Fiction",
+                        "Cameras",
+                        "Activewear",
+                        "Organization",
+                        "Winter Coats",
+                        "Furniture",
+                        "Desks",
+                        "Fiction",
+                        "Classics",
+                        "Smartphones",
+                        "Cookware",
+                        "Decor",
+                        "Laptops",
+                        "Office Supplies",
+                        "Women's Clothing",
+                        "Men's Clothing",
+                        "Textbooks",
+                        "Appliances",
+                        "Chairs",
+                        "Lighting",
+                        "Headphones"
+                    ],
+                    "counts": [
+                        12,
+                        9,
+                        8,
+                        6,
+                        6,
+                        6,
+                        5,
+                        5,
+                        5,
+                        5,
+                        4,
+                        4,
+                        3,
+                        3,
+                        3,
+                        3,
+                        3,
+                        3,
+                        2,
+                        2,
+                        2,
+                        1
+                    ]
+                }
+            }
+        },
+        {
+            "column_name": "target_age_range",
+            "num_records": 100,
+            "num_null": 0,
+            "num_unique": 5,
+            "pyarrow_dtype": "string",
+            "simple_dtype": "string",
+            "column_type": "sampler",
+            "sampler_type": "category",
+            "distribution_type": "categorical",
+            "distribution": {
+                "most_common_value": "18-25",
+                "least_common_value": "25-35",
+                "histogram": {
+                    "categories": [
+                        "18-25",
+                        "35-50",
+                        "50-65",
+                        "65+",
+                        "25-35"
+                    ],
+                    "counts": [
+                        23,
+                        22,
+                        22,
+                        17,
+                        16
+                    ]
+                }
+            }
+        },
+        {
+            "column_name": "customer",
+            "num_records": 100,
+            "num_null": 0,
+            "num_unique": 100,
+            "pyarrow_dtype": "struct<age: int64, bachelors_field: string, birth_date: string, city: string, country: string, county: string, education_level: string, email_address: string, ethnic_background: string, first_name: string, last_name: string, locale: string, marital_status: string, middle_name: string, occupation: string, phone_number: string, sex: string, ssn: string, state: string, street_name: string, street_number: int64, unit: string, uuid: string, zipcode: string>",
+            "simple_dtype": "dict",
+            "column_type": "sampler",
+            "sampler_type": "person",
+            "distribution_type": "other",
+            "distribution": null
+        },
+        {
+            "column_name": "number_of_stars",
+            "num_records": 100,
+            "num_null": 0,
+            "num_unique": 5,
+            "pyarrow_dtype": "int64",
+            "simple_dtype": "int",
+            "column_type": "sampler",
+            "sampler_type": "uniform",
+            "distribution_type": "numerical",
+            "distribution": {
+                "min": 1,
+                "max": 5,
+                "mean": 2.88,
+                "stddev": 1.14,
+                "median": 3.0
+            }
+        },
+        {
+            "column_name": "review_style",
+            "num_records": 100,
+            "num_null": 0,
+            "num_unique": 4,
+            "pyarrow_dtype": "string",
+            "simple_dtype": "string",
+            "column_type": "sampler",
+            "sampler_type": "category",
+            "distribution_type": "categorical",
+            "distribution": {
+                "most_common_value": "brief",
+                "least_common_value": "structured with bullet points",
+                "histogram": {
+                    "categories": [
+                        "brief",
+                        "detailed",
+                        "rambling",
+                        "structured with bullet points"
+                    ],
+                    "counts": [
+                        44,
+                        29,
+                        15,
+                        12
+                    ]
+                }
+            }
+        },
+        {
+            "column_name": "product_name",
+            "num_records": 100,
+            "num_null": 0,
+            "num_unique": 79,
+            "pyarrow_dtype": "string",
+            "simple_dtype": "string",
+            "column_type": "llm-text",
+            "completion_tokens_mean": 5.03,
+            "completion_tokens_median": 5.0,
+            "completion_tokens_stddev": 1.02,
+            "prompt_tokens_mean": 76.95,
+            "prompt_tokens_median": 77.0,
+            "prompt_tokens_stddev": 0.73
+        },
+        {
+            "column_name": "customer_review",
+            "num_records": 100,
+            "num_null": 0,
+            "num_unique": 100,
+            "pyarrow_dtype": "string",
+            "simple_dtype": "string",
+            "column_type": "llm-text",
+            "completion_tokens_mean": 377.83,
+            "completion_tokens_median": 203.5,
+            "completion_tokens_stddev": 361.47,
+            "prompt_tokens_mean": 61.93,
+            "prompt_tokens_median": 62.0,
+            "prompt_tokens_stddev": 1.51
+        }
+    ],
+    "side_effect_column_names": [],
+    "column_profiles": null
+}

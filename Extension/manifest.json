@@ -14,8 +14,9 @@
     "128": "/icon128.png"
   },
   "host_permissions": [
-    "https://outlook.office.com//*",
-    "https://outlook.live.com/*"
+    "https://outlook.office.com/*",
+    "https://outlook.live.com/*",
+    "https://localhost:8000/*"
   ],
   "permissions": [
     "activeTab",
@@ -27,7 +28,7 @@
   "content_scripts": [
     {
       "matches": [
-        "https://outlook.office.com//*",
+        "https://outlook.office.com/*",
         "https://outlook.live.com/*"
       ],
       "js": [

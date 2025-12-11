@@ -1,30 +1,11 @@
-// Listen for messages from popup
-chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
-  if (request.action === "getEmailContent") {
-    const emailData = extractEmailData();
-    sendResponse(emailData);
-  }
-  return true;
-});
+console.log("Content script loaded!");
 
+// Define this first
 function extractEmailData() {
   try {
-    // For Outlook Web App
-    // querySelector will look for the firs element that has [ária-label="Message subject"].
-    // This however is not how it is in the OWA.
-
-
-    //subject in the dom is named f77rj
-    const subject = document.querySelector(".f77rj")?.textContent ||
-      'Sender not found';
-    //sender in the dom is named OZZZK, but it's a span
-    const sender = document.querySelector('span.OZZZK')?.textContent ||
-      'Sender not found';
-
-    //body in the dom we can look it up with the aria-label "Message body"
-    const body = document.querySelector('[aria-label="Message body"]')?.innerText ||
-      'Body not found';
-
+    const subject = document.querySelector(".f77rj")?.textContent || 'Sender not found';
+    const sender = document.querySelector('span.OZZZK')?.textContent || 'Sender not found';
+    const body = document.querySelector('[role="document"]')?.innerText || 'Body not found';
 
     return {
       subject: subject.trim(),
@@ -38,4 +19,34 @@ function extractEmailData() {
     return { error: error.message };
   }
 }
+
+chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+  if (request.action === "getEmailContent") {
+    const emailData = extractEmailData();
+
+    fetch("http://localhost:8000/analyze-email", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(emailData)
+    })
+      .then(res => res.json())
+      .then(analysis => {
+        sendResponse({
+          success: true,
+          email: emailData,
+          phish: analysis.phish,
+          accuracy: analysis.accuracy,
+          upr: analysis.upr
+        });
+      })
+      .catch(err => {
+        sendResponse({
+          success: false,
+          error: err.message
+        });
+      });
+
+    return true; // keep async channel open
+  }
+});
 

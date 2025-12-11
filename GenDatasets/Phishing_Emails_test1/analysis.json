@@ -1,0 +1,267 @@
+{
+    "num_records": 24917,
+    "target_num_records": 25000,
+    "column_statistics": [
+        {
+            "column_name": "departments",
+            "num_records": 24917,
+            "num_null": 0,
+            "num_unique": 5,
+            "pyarrow_dtype": "string",
+            "simple_dtype": "string",
+            "column_type": "sampler",
+            "sampler_type": "category",
+            "distribution_type": "categorical",
+            "distribution": {
+                "most_common_value": "Chemical Engineering",
+                "least_common_value": "Mechanical Engineering",
+                "histogram": {
+                    "categories": [
+                        "Chemical Engineering",
+                        "Industrial Engineering",
+                        "Computer Science and Engineering",
+                        "Electrical and Computer Engineering",
+                        "Mechanical Engineering"
+                    ],
+                    "counts": [
+                        5061,
+                        5027,
+                        4984,
+                        4925,
+                        4920
+                    ]
+                }
+            }
+        },
+        {
+            "column_name": "department_staff",
+            "num_records": 24917,
+            "num_null": 0,
+            "num_unique": 25,
+            "pyarrow_dtype": "string",
+            "simple_dtype": "string",
+            "column_type": "sampler",
+            "sampler_type": "subcategory",
+            "distribution_type": "categorical",
+            "distribution": {
+                "most_common_value": "Dra. Patricia Bermuda Otto",
+                "least_common_value": "Dr. Sierra David",
+                "histogram": {
+                    "categories": [
+                        "Dra. Patricia Bermuda Otto",
+                        "Dr. Kaige Lu",
+                        "Dr. Mauricio Rivera Dominguez",
+                        "Dr. Agosto Rulla Toro",
+                        "Dr. Yoma Torres",
+                        "Dr. Brand Coolriel",
+                        "Dr. David Doomer",
+                        "Dr. Osvaldo Cordova",
+                        "Dr. Gather Shun",
+                        "Dr. Juan Patrollo",
+                        "Assistant Professor Sam Olive Bonicia",
+                        "Dr. Edward Otto",
+                        "Dr. Pedro Pedro",
+                        "Dr. William Tercero Gallina",
+                        "Dr. Arturo Rey",
+                        "Dr. Cordova Bonilla",
+                        "Dr. Mark Shoots",
+                        "Dr. Hector Carlos Carlos",
+                        "Dr. David Barrio Gonzales",
+                        "Dra. Marie Curie",
+                        "Dr. Domingo Domingo Rodriguez",
+                        "Dr. Juan Midely",
+                        "Dr. Easydoro Rey",
+                        "Dr. Ludwig Jose",
+                        "Dr. Sierra David"
+                    ],
+                    "counts": [
+                        1065,
+                        1043,
+                        1034,
+                        1032,
+                        1025,
+                        1018,
+                        1017,
+                        1009,
+                        1002,
+                        1000,
+                        998,
+                        994,
+                        991,
+                        985,
+                        984,
+                        984,
+                        983,
+                        982,
+                        981,
+                        978,
+                        977,
+                        973,
+                        968,
+                        960,
+                        934
+                    ]
+                }
+            }
+        },
+        {
+            "column_name": "subject",
+            "num_records": 24917,
+            "num_null": 0,
+            "num_unique": 5,
+            "pyarrow_dtype": "string",
+            "simple_dtype": "string",
+            "column_type": "sampler",
+            "sampler_type": "category",
+            "distribution_type": "categorical",
+            "distribution": {
+                "most_common_value": "remote research opportunity",
+                "least_common_value": "administrative assistant",
+                "histogram": {
+                    "categories": [
+                        "remote research opportunity",
+                        "research assistant",
+                        "research opportunity",
+                        "Internship",
+                        "administrative assistant"
+                    ],
+                    "counts": [
+                        7181,
+                        7079,
+                        3590,
+                        3534,
+                        3533
+                    ]
+                }
+            }
+        },
+        {
+            "column_name": "weekly_pay",
+            "num_records": 24917,
+            "num_null": 0,
+            "num_unique": 5,
+            "pyarrow_dtype": "int64",
+            "simple_dtype": "int",
+            "column_type": "sampler",
+            "sampler_type": "category",
+            "distribution_type": "categorical",
+            "distribution": {
+                "most_common_value": 275,
+                "least_common_value": 350,
+                "histogram": {
+                    "categories": [
+                        275,
+                        300,
+                        250,
+                        315,
+                        350
+                    ],
+                    "counts": [
+                        7116,
+                        7060,
+                        3651,
+                        3597,
+                        3493
+                    ]
+                }
+            }
+        },
+        {
+            "column_name": "student_name",
+            "num_records": 24917,
+            "num_null": 0,
+            "num_unique": 22827,
+            "pyarrow_dtype": "string",
+            "simple_dtype": "string",
+            "column_type": "expression"
+        },
+        {
+            "column_name": "student_age",
+            "num_records": 24917,
+            "num_null": 0,
+            "num_unique": 13,
+            "pyarrow_dtype": "int64",
+            "simple_dtype": "int",
+            "column_type": "expression"
+        },
+        {
+            "column_name": "email_style",
+            "num_records": 24917,
+            "num_null": 0,
+            "num_unique": 3,
+            "pyarrow_dtype": "string",
+            "simple_dtype": "string",
+            "column_type": "sampler",
+            "sampler_type": "category",
+            "distribution_type": "categorical",
+            "distribution": {
+                "most_common_value": "Predatory",
+                "least_common_value": "Casual",
+                "histogram": {
+                    "categories": [
+                        "Predatory",
+                        "Friendly",
+                        "Casual"
+                    ],
+                    "counts": [
+                        12494,
+                        6268,
+                        6155
+                    ]
+                }
+            }
+        },
+        {
+            "column_name": "email_subject",
+            "num_records": 24917,
+            "num_null": 0,
+            "num_unique": 749,
+            "pyarrow_dtype": "string",
+            "simple_dtype": "string",
+            "column_type": "llm-text",
+            "completion_tokens_mean": 12.31,
+            "completion_tokens_median": 12.0,
+            "completion_tokens_stddev": 1.53,
+            "prompt_tokens_mean": 54.81,
+            "prompt_tokens_median": 55.0,
+            "prompt_tokens_stddev": 1.12
+        },
+        {
+            "column_name": "body",
+            "num_records": 24917,
+            "num_null": 0,
+            "num_unique": 24917,
+            "pyarrow_dtype": "string",
+            "simple_dtype": "string",
+            "column_type": "llm-text",
+            "completion_tokens_mean": 239.97,
+            "completion_tokens_median": 238.0,
+            "completion_tokens_stddev": 27.3,
+            "prompt_tokens_mean": 176.06,
+            "prompt_tokens_median": 174.0,
+            "prompt_tokens_stddev": 5.31
+        },
+        {
+            "column_name": "label",
+            "num_records": 24917,
+            "num_null": 0,
+            "num_unique": 1,
+            "pyarrow_dtype": "int64",
+            "simple_dtype": "int",
+            "column_type": "sampler",
+            "sampler_type": "uniform",
+            "distribution_type": "numerical",
+            "distribution": {
+                "min": 1,
+                "max": 1,
+                "mean": 1.0,
+                "stddev": 0.0,
+                "median": 1.0
+            }
+        }
+    ],
+    "side_effect_column_names": [
+        "student_victim"
+    ],
+    "column_profiles": null
+}
